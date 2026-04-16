@@ -10,7 +10,7 @@ const nextConfig = {
   },
   // basePath: isGithubPages ? `/${repoName}` : '',
   // assetPrefix: isGithubPages ? `/${repoName}/` : '',
-  basePath: '',
+  basePath: '/pepong-wedding-invitation',
   assetPrefix: '',
 };
 

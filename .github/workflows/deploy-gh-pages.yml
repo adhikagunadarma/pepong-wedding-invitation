@@ -26,10 +26,9 @@ jobs:
         run: |
           DEPLOY_TARGET=gh-pages npm run build
           cp out/index.html out/404.html
-          echo "lizzyarya2025.id" > out/CNAME
           touch out/.nojekyll
         env:
-          NEXT_PUBLIC_BASE_PATH: 
+          NEXT_PUBLIC_BASE_PATH: '/pepong-wedding-invitation'
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
