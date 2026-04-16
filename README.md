@@ -21,7 +21,7 @@ Before launching the project on any machine, guarantee you have:
    - *Mac Users* can download Node via Installer or Homebrew (`brew install node`).
 2. **Git**: Ensure Git is installed to clone/pull branches.
 3. **Supabase Environment Config**: 
-   Since this queries the Supabase DB for `arya_lizzy_wish_wedding`, you must retrieve the database endpoint and `ANON_KEY`.
+   Since this queries the Supabase DB for `xxx`, you must retrieve the database endpoint and `ANON_KEY`.
 
 ---
 
