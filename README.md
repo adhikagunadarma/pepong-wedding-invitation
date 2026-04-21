@@ -35,12 +35,16 @@ cd pepong-wedding-invitation
 ```
 
 ### 2. Environment Setup
-Create a `.env.local` file at the root folder of the repository. Populate it with your designated database variables:
+Create a `.env.local` file at the root folder of the repository. Populate it with your designated database variables and the project's base path to ensure all images and fonts resolve correctly:
 
 ```env
+NEXT_PUBLIC_BASE_PATH=/pepong-wedding-invitation
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 ```
+
+> [!IMPORTANT]
+> The `NEXT_PUBLIC_BASE_PATH` must match the `basePath` configuration in `next.config.ts`. If this is missing or incorrect, images and assets will return 404 errors.
 
 ### 3. Install NPM Dependencies
 
@@ -63,7 +67,8 @@ To fire up the development server seamlessly on both PC & Macbook:
 npm run dev
 ```
 
-1. Open your browser and navigate to `http://localhost:3000`.
+1. Open your browser and navigate to `http://localhost:3000/pepong-wedding-invitation`. 
+   - *Note: Because a `basePath` is configured, the root `http://localhost:3000` will return a 404.*
 2. Notice the URL generating `.next/types/` natively on its first boot to establish all Next.js App Router rules.
 3. Edit `app/page.tsx` and watch the browser hot-reload your alterations instantly!
 
