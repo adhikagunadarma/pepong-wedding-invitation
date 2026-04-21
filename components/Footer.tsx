@@ -14,12 +14,13 @@ const Footer = () => {
          </p>
       </div>
 
-      <div className="relative w-full max-w-screen-xl aspect-[4/3] sm:aspect-video mx-auto">
+      <div className="relative w-full max-w-screen-xl mx-auto px-4 sm:px-0">
         <Image
           src={`${basePath}/images/artboard-6.png`}
           alt="See you!"
-          fill
-          className="object-cover rounded-lg"
+          width={1920}
+          height={1440}
+          className="w-full h-auto object-contain rounded-[1rem] md:rounded-2xl"
         />
       </div>
     </footer>

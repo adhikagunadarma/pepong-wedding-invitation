@@ -37,8 +37,7 @@ export default function WeddingGift() {
                Gift
              </h2>
              <p className="text-[7px] sm:text-[10px] md:text-sm lg:text-base font-sans leading-snug sm:leading-relaxed text-[#253247]">
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-               Quis ipsum suspendisse.
+               Your presence is our greatest present. If you would like to contribute to our future, a digital gift is deeply appreciated.
              </p>
              <button
                 onClick={() => setModalOpen(true)}

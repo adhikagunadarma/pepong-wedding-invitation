@@ -36,7 +36,7 @@ const Gallery = () => {
           
           <div className="mt-12 text-center px-4 max-w-lg mx-auto">
             <p className="text-sm md:text-base font-sans leading-relaxed text-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+              Every picture tells a story, and you are all an essential part of ours. From the small moments to the grand adventures, our love story continues to grow. 
             </p>
           </div>
         </motion.div>

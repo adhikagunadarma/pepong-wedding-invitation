@@ -82,7 +82,7 @@ const WeddingWishes = () => {
           Faq?
         </motion.h2>
         <p className="text-sm font-sans leading-relaxed text-foreground text-left px-8">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
+          Have an inquiry about the wedding details? Feel free to reach out to our team, and we will be delighted to assist you with everything you need.
         </p>
       </div>
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ScratchCard from "./ScratchCard";
 
-const TARGET_DATE = new Date("2026-10-04T12:30:00");
+const TARGET_DATE = new Date("2026-06-20T12:30:00");
 
 interface TimeLeft {
   days: number;
@@ -51,8 +51,7 @@ const Countdown = () => {
         transition={{ duration: 0.7 }}
         className="mb-16 -mt-8"
       >
-        <p className="text-xl font-bold mb-4 font-sans tracking-wide">Scratch to reveal the date</p>
-        <div className="rotate-2 drop-shadow-lg">
+        <div className="rotate-2 drop-shadow-lg scale-90 sm:scale-100">
           <ScratchCard 
             width={340} 
             height={240} 

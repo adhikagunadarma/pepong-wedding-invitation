@@ -37,9 +37,7 @@ const EventDetails = () => {
         <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
           <div className="mb-8">
             <p className="text-sm font-sans leading-relaxed text-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-              tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse 
-              ultrices gravida. Risus commodo viverra maecenas
+              Please join us as we exchange vows and promise our forevers. We would be absolutely honored to have you witness our special moment.
             </p>
           </div>
 

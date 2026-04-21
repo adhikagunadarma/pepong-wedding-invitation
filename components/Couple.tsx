@@ -40,7 +40,7 @@ const Couple = () => {
           />
           <div className="w-[300px] mt-2">
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+               A heart full of dreams, a gentle spirit, and a smile that lights up the world.
             </p>
           </div>
         </motion.div>
@@ -60,7 +60,7 @@ const Couple = () => {
           />
           <div className="w-[300px] mt-2">
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+               A steady hand, a caring heart, and a love designed to last a lifetime.
             </p>
           </div>
         </motion.div>
