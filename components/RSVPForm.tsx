@@ -1,91 +1,142 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const RSVPForm = () => {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   return (
-    <section className="w-full bg-background flex flex-col items-center">
-      <div className="w-full max-w-sm rounded-[1rem] border border-border p-6 text-center shadow-sm relative mt-4">
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-background px-3 font-script text-3xl text-primary -rotate-2">
-          RSVP
-        </div>
+    <section className="w-full py-16 flex flex-col items-center bg-[#F2EBE1]">
+      <motion.h2
+        className="text-6xl md:text-8xl font-script text-foreground mb-12 -rotate-2"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        RSVP
+      </motion.h2>
 
-        {submitted ? (
-          <div className="py-12 animate-fadeIn flex flex-col items-center">
-            <h3 className="font-script text-4xl text-primary mb-2">Thank you!</h3>
-            <p className="text-foreground font-light text-sm">Your response has been received.</p>
-          </div>
-        ) : (
-          <>
-            <p className="mt-4 mb-6 text-sm text-foreground/80 leading-relaxed font-light">
-              Please RSVP by completing the form below.
-            </p>
+      <motion.div
+        className="cursor-pointer relative transition-transform hover:scale-105 active:scale-95 z-20"
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        onClick={() => setModalOpen(true)}
+      >
+        <Image
+          src={`${basePath}/images/artboard-7.png`}
+          alt="RSVP Envelope"
+          width={360}
+          height={280}
+          className="object-contain"
+        />
+      </motion.div>
 
-            {/* Hidden iframe to block redirecting to Google Forms page */}
-            <iframe name="hidden_iframe" className="hidden" onLoad={() => { setSubmitted(true); }}></iframe>
-
-            <form
-              action="https://docs.google.com/forms/d/e/1FAIpQLSc6WuSZvXUkJy0Z5ckBbrLve3mqr_Bb_ShnKB8AvzJV3pQVGQ/formResponse"
-              method="POST"
-              target="hidden_iframe"
-              className="flex flex-col gap-5 text-left"
-              onSubmit={() => setTimeout(() => setSubmitted(true), 1000)}
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+               className="w-full max-w-sm rounded-[1rem] border border-border p-8 bg-[#F2EBE1] shadow-xl relative"
+               initial={{ scale: 0.9, y: 20 }}
+               animate={{ scale: 1, y: 0 }}
+               exit={{ scale: 0.9, y: 20 }}
             >
-              {/* Name Block */}
-              <div className="flex flex-col gap-1">
-                <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-2">Name</label>
-                <input 
-                  type="text" 
-                  name="entry.56822025" 
-                  required 
-                  placeholder="John Doe"
-                  className="w-full border border-border bg-white rounded-lg px-4 py-2 text-sm focus:outline-none"
-                />
-              </div>
-
-              {/* Attending Status */}
-              <div className="flex flex-col gap-1">
-                <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-2">Will you attend?</label>
-                <div className="flex flex-col gap-2">
-                  <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-lg px-4 py-2">
-                    <input type="radio" name="entry.650001048" value="Yes!" required className="accent-primary" />
-                    <span className="text-sm">Yes, gladly!</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-lg px-4 py-2">
-                    <input type="radio" name="entry.650001048" value="No :(" required className="accent-primary" />
-                    <span className="text-sm">No, I'm sorry</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Number of Guests */}
-              <div className="flex flex-col gap-1">
-                <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-2">Guests count</label>
-                <div className="flex flex-col gap-2">
-                  <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-lg px-4 py-2">
-                    <input type="radio" name="entry.1294259475" value="1" required className="accent-primary" />
-                    <span className="text-sm">1 Person</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-lg px-4 py-2">
-                    <input type="radio" name="entry.1294259475" value="2" required className="accent-primary" />
-                    <span className="text-sm">2 People</span>
-                  </label>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="mt-4 w-full border border-border bg-foreground text-background uppercase tracking-widest font-bold py-3 rounded-lg shadow-sm hover:bg-foreground/90 transition-colors"
+              <button 
+                onClick={() => setModalOpen(false)}
+                className="absolute top-4 right-4 text-3xl opacity-50 hover:opacity-100"
               >
-                Submit RSVP
+                &times;
               </button>
-            </form>
-          </>
+              
+              <h3 className="font-script text-6xl text-center mb-6 text-foreground">RSVP</h3>
+
+              {submitted ? (
+                <div className="py-8 animate-fadeIn flex flex-col items-center">
+                  <h3 className="font-script text-5xl text-[#9CBA7F] mb-4">Thank you!</h3>
+                  <p className="text-foreground font-sans text-sm tracking-wide">Your response has been received.</p>
+                  <button onClick={() => setModalOpen(false)} className="mt-8 underline text-sm tracking-widest font-bold">CLOSE</button>
+                </div>
+              ) : (
+                <>
+                  <p className="mb-6 text-sm text-foreground leading-relaxed font-sans text-center">
+                    Please RSVP by completing the form below.
+                  </p>
+
+                  <iframe name="hidden_iframe" className="hidden" onLoad={() => { if(submitted) { } }}></iframe>
+
+                  <form
+                    action="https://docs.google.com/forms/d/e/1FAIpQLSc6WuSZvXUkJy0Z5ckBbrLve3mqr_Bb_ShnKB8AvzJV3pQVGQ/formResponse"
+                    method="POST"
+                    target="hidden_iframe"
+                    className="flex flex-col gap-4 text-left font-sans"
+                    onSubmit={() => {
+                        setTimeout(() => setSubmitted(true), 1000);
+                    }}
+                  >
+                    {/* Name Block */}
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">Name</label>
+                      <input 
+                        type="text" 
+                        name="entry.56822025" 
+                        required 
+                        placeholder="John Doe"
+                        className="w-full border border-border bg-white rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#9CBA7F]"
+                      />
+                    </div>
+
+                    {/* Attending Status */}
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">Will you attend?</label>
+                      <div className="flex flex-col gap-2">
+                        <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
+                          <input type="radio" name="entry.650001048" value="Yes!" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <span className="text-sm">Yes, gladly!</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
+                          <input type="radio" name="entry.650001048" value="No :(" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <span className="text-sm">No, I'm sorry</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Number of Guests */}
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">Guests count</label>
+                      <div className="flex flex-col gap-2">
+                        <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
+                          <input type="radio" name="entry.1294259475" value="1" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <span className="text-sm">1 Person</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
+                          <input type="radio" name="entry.1294259475" value="2" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <span className="text-sm">2 People</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="mt-6 w-full border border-border bg-[#9CBA7F] text-white uppercase tracking-widest font-bold py-4 rounded-md shadow-sm hover:bg-[#8CA872] transition-colors"
+                    >
+                      Submit RSVP
+                    </button>
+                  </form>
+                </>
+              )}
+            </motion.div>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </section>
   );
 };

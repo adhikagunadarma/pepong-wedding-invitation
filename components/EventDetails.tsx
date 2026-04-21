@@ -1,43 +1,69 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const EventDetails = () => {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
   return (
-    <section className="w-full bg-background flex flex-col items-center max-w-sm mx-auto">
-      <motion.div
-        className="w-full border border-border rounded-[1rem] p-6 text-center shadow-sm relative mt-8"
-        initial={{ opacity: 0, y: 20 }}
+    <section className="w-full bg-background flex flex-col items-center mt-8">
+      <motion.h2
+        className="text-5xl md:text-7xl font-script text-foreground mb-12 mt-12"
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true }}
       >
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-background px-3 font-script text-3xl text-primary -rotate-3">
-          Ceremony
-        </div>
-
-        <h3 className="text-xl font-bold tracking-tighter text-foreground mt-4 uppercase">Holy Matrimony</h3>
-        <p className="text-foreground mt-2 font-medium tracking-tight">4 October 2025 • 12:30 PM</p>
-        <p className="text-foreground/80 mt-1 text-sm uppercase tracking-widest">Santo Laurensius Catholic Church</p>
-      </motion.div>
+        Event Details
+      </motion.h2>
 
       <motion.div
-        className="w-full border border-border rounded-[1rem] p-6 text-center shadow-sm relative mt-10"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        className="w-full md:max-w-4xl border-y md:border border-border flex flex-col md:flex-row bg-[#E5DFC5] md:rounded-xl overflow-hidden mb-8 shadow-sm"
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
       >
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-background px-3 font-script text-3xl text-primary rotate-2">
-          Dress Code
+        {/* Left column - Church Image */}
+        <div className="w-full md:w-1/2 relative min-h-[400px] border-b md:border-b-0 md:border-r border-border">
+          <Image
+            src={`${basePath}/images/artboard-4.png`}
+            alt="Church"
+            fill
+            className="object-cover"
+          />
         </div>
 
-        <h3 className="text-xl font-bold tracking-tighter text-foreground mt-4 uppercase">Our Palette</h3>
-        <p className="text-foreground mt-2 font-medium tracking-tight">Wear your best & comfy outfit</p>
-        
-        {/* Color Palette Balls */}
-        <div className="flex justify-center gap-3 mt-4">
-          <div className="w-8 h-8 rounded-full border border-border" style={{ backgroundColor: "#F4E3D7" }}></div>
-          <div className="w-8 h-8 rounded-full border border-border" style={{ backgroundColor: "#D8C3A5" }}></div>
-          <div className="w-8 h-8 rounded-full border border-border" style={{ backgroundColor: "#8E8D8A" }}></div>
-          <div className="w-8 h-8 rounded-full border border-border" style={{ backgroundColor: "#E98074" }}></div>
+        {/* Right column - Text Details */}
+        <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+          <div className="mb-8">
+            <p className="text-sm font-sans leading-relaxed text-foreground">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+              tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse 
+              ultrices gravida. Risus commodo viverra maecenas
+            </p>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Location:</h3>
+            <p className="text-sm font-sans leading-relaxed text-foreground">
+              Santo Laurensius Catholic Church
+            </p>
+          </div>
+
+          <div className="w-full mt-4">
+            <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Maps:</h3>
+            <div className="w-full h-48 rounded-lg overflow-hidden border border-border mt-3 shadow-sm">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63458.74075248456!2d106.61729558578413!3d-6.2411416992178745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fbc0ca3c7539%3A0x6fe1ad1d96d0fa85!2sSaint%20Lawrence%20Catholic%20Church%2C%20Alam%20Sutera!5e0!3m2!1sen!2sid!4v1755696834020!5m2!1sen!2sid" 
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: "grayscale(100%) contrast(120%)" }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </div>
         </div>
       </motion.div>
     </section>

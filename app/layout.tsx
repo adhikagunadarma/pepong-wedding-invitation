@@ -1,16 +1,41 @@
 import "./globals.css";
-import { Montserrat, Great_Vibes } from "next/font/google";
+import localFont from "next/font/local";
 import AudioPlayer from "@/components/AudioPlayer";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
+const basisGrotesque = localFont({
+  src: [
+    {
+      path: "../public/fonts/BasisGrotesqueArabicPro-Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BasisGrotesqueArabicPro-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BasisGrotesqueArabicPro-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BasisGrotesqueArabicPro-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BasisGrotesqueArabicPro-Black.ttf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-sans",
 });
 
-const greatVibes = Great_Vibes({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-great-vibes",
+const madelyn = localFont({
+  src: "../public/fonts/Madelyn-Trial-Regular.ttf",
+  variable: "--font-script",
 });
 
 export const metadata = {
@@ -28,7 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${greatVibes.variable} font-sans bg-[#FAFAFA] text-[#333333] antialiased`}>
+      <body className={`${basisGrotesque.variable} ${madelyn.variable} font-sans bg-[#F2EBE1] text-[#333333] antialiased`}>
         {children}
         <AudioPlayer />
       </body>

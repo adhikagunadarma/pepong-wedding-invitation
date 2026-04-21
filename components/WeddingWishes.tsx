@@ -19,6 +19,9 @@ const WeddingWishes = () => {
 
   useEffect(() => {
     const fetchWishes = async () => {
+       // Graceful degradation if env not setup
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return;
+
       const { data, error } = await supabase
         .from("arya_lizzy_wish_wedding")
         .select("*")
@@ -47,46 +50,73 @@ const WeddingWishes = () => {
       message: message.trim(),
     };
 
-    const { error } = await supabase
-      .from("arya_lizzy_wish_wedding")
-      .insert(newWish);
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      const { error } = await supabase
+        .from("arya_lizzy_wish_wedding")
+        .insert(newWish);
 
-    if (!error) {
-      setWishes((prev) => [...prev, newWish]);
-      setName("");
-      setMessage("");
+      if (!error) {
+        setWishes((prev) => [...prev, newWish]);
+        setName("");
+        setMessage("");
+      }
+    } else {
+        setWishes((prev) => [...prev, newWish]);
+        setName("");
+        setMessage("");
     }
     setLoading(false);
   };
 
   return (
-    <section className="w-full bg-background flex flex-col items-center mb-16">
-      <div className="w-full max-w-sm rounded-[1rem] border border-border p-6 text-center shadow-sm relative mt-4">
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-background px-3 font-script text-3xl text-primary rotate-3">
-          Guestbook
-        </div>
+    <section className="w-full bg-[#F2EBE1] flex flex-col items-center pb-16">
+      
+      {/* FAQ Placeholder */}
+      <div className="w-full max-w-sm mb-20 text-center">
+        <motion.h2
+          className="text-6xl md:text-8xl font-script text-foreground mb-8 text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          Faq?
+        </motion.h2>
+        <p className="text-sm font-sans leading-relaxed text-foreground text-left px-8">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
+        </p>
+      </div>
 
+      <motion.h2
+        className="text-6xl md:text-8xl font-script text-foreground mb-8 text-center"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        Wishes
+      </motion.h2>
+
+      <div className="w-full max-w-md bg-[#E5DFC5] rounded-[1rem] p-6 shadow-sm border border-border">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-3 mt-4 text-left"
+          className="flex flex-col gap-3 text-left w-full"
         >
           <input
             type="text"
             placeholder="Your Name..."
-            className="w-full border-b border-border bg-transparent px-2 py-2 text-foreground focus:outline-none"
+            className="w-full border-b border-border bg-transparent px-2 py-2 text-foreground focus:outline-none font-sans"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <textarea
             placeholder="Write a message..."
-            className="w-full border-b border-border bg-transparent px-2 py-2 text-foreground focus:outline-none resize-none h-20"
+            className="w-full border-b border-border bg-transparent px-2 py-2 text-foreground focus:outline-none resize-none h-20 font-sans"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 border border-border bg-white text-foreground uppercase tracking-widest font-bold py-2 rounded-lg shadow-sm hover:bg-muted"
+            className="w-full mt-2 bg-[#9CBA7F] text-white uppercase tracking-widest font-bold py-3 rounded-md shadow-sm hover:bg-[#8CA872] transition-colors"
           >
             {loading ? "Sending..." : "Send Wish"}
           </button>
@@ -94,12 +124,12 @@ const WeddingWishes = () => {
 
         <div
           ref={scrollRef}
-          className="mt-6 max-h-[300px] overflow-y-auto text-left flex flex-col gap-4 px-2"
+          className="marginTop-6 max-h-[300px] overflow-y-auto text-left flex flex-col gap-4 px-2 custom-scrollbar mt-6"
         >
           {wishes.map((wish, idx) => (
             <div key={idx} className="border-b border-border/30 pb-3">
-              <p className="font-bold text-sm uppercase tracking-tighter text-foreground">{wish.name}</p>
-              <p className="text-foreground/80 font-light text-sm mt-1">{wish.message}</p>
+              <p className="font-bold text-sm tracking-wide font-sans text-foreground">{wish.name}</p>
+              <p className="text-foreground/90 font-sans leading-relaxed text-sm mt-1">{wish.message}</p>
             </div>
           ))}
         </div>

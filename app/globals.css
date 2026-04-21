@@ -2,14 +2,14 @@
 @import "tw-animate-css";
 
 @theme {
-  --color-primary: #DD3333; /* Vivid minimal red */
+  --color-primary: #9CBA7F; /* Soft green */
   --color-primary-foreground: #FFFFFF;
-  --color-background: #FFFFFF;
-  --color-foreground: #000000;
-  --color-muted: #F8F8F8;
-  --color-border: #000000; /* Sketchbook borders are pure black */
-  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
-  --font-script: var(--font-great-vibes), cursive;
+  --color-background: #F2EBE1; /* Cream bg */
+  --color-foreground: #333333;
+  --color-muted: #E5DFC5;
+  --color-border: #333333;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-script), cursive;
   
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -17,7 +17,7 @@
 }
 
 :root {
-  --radius: 0.25rem; /* Tighter border radiuses for drawn boxes */
+  --radius: 0.25rem;
 }
 
 @layer base {

@@ -4,29 +4,35 @@ import Image from "next/image";
 const Hero = () => {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   return (
-    <section className="w-full flex flex-col items-center text-center mt-6">
-      <div className="relative w-full max-w-sm rounded-[2rem] overflow-hidden border border-border pb-4 p-2 bg-background shadow-sm">
-        <div className="w-full h-[450px] relative rounded-[1.5rem] overflow-hidden grayscale contrast-125 brightness-90">
-          <Image
-            src={`${basePath}/images/home.gif`}
-            alt="Pepe & Pong"
-            fill
-            className="object-cover"
-          />
+    <section className="w-full flex flex-col items-center relative overflow-hidden">
+      <div className="relative w-full aspect-[4/3] sm:aspect-video flex justify-center items-center bg-[#51633F]">
+        <Image
+          src={`${basePath}/images/artboard-1.png`}
+          alt="Adhika & Josephine"
+          fill
+          className="object-cover"
+          priority
+        />
+        
+        <div className="absolute top-10 left-6 sm:top-16 sm:left-12 z-10">
+          <h1 className="text-6xl md:text-8xl font-script text-[#F2EBE1] drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">
+            Adhika <span className="text-yellow-400 text-5xl md:text-7xl">&amp;</span>
+          </h1>
         </div>
         
-        {/* Caption embedded below the photo structurally */}
-        <div className="mt-6 flex flex-col items-center z-10 animate-fadeIn">
-          <h2 className="text-5xl font-script text-primary mb-2 -rotate-2">
-            Love is —
-          </h2>
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground uppercase leading-none">
-            We're Getting<br/>Married!
+        <div className="absolute bottom-16 right-6 sm:bottom-24 sm:right-12 z-10">
+          <h1 className="text-6xl md:text-8xl font-script text-[#F2EBE1] drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">
+            Josephine
           </h1>
-          <p className="mt-4 font-bold text-lg text-foreground tracking-widest uppercase">
-            Pepe & Pong
-          </p>
         </div>
+      </div>
+
+      <div className="text-center px-8 py-12 bg-background w-full">
+        <p className="text-sm md:text-base text-foreground max-w-lg mx-auto font-sans leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+          incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices 
+          gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+        </p>
       </div>
     </section>
   );

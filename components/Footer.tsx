@@ -1,23 +1,29 @@
-// components/Footer.tsx
 "use client";
 import Image from "next/image";
-
 
 const Footer = () => {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   return(
-    <footer className="py-12 text-center px-6 ">
+    <footer className="w-full bg-background flex flex-col justify-between items-center text-center overflow-hidden mb-8 md:mb-16">
+      
+      {/* Paragraph between WeddingGift and Footer */}
+      <div className="w-full max-w-2xl px-4 py-8 md:py-16 mx-auto text-center">
+         <p className="text-sm md:text-base font-sans leading-relaxed text-foreground">
+           Thank you for being part of our journey. We can&apos;t wait to celebrate this special day with you!
+         </p>
+      </div>
 
-      <Image
-        src={`${basePath}/images/footer.png`}
-        alt="Thank you for celebrating with us"
-        width={450}
-        height={250}
-        className="mx-auto w-full max-w-[180px] md:max-w-[220px]"
+      <div className="relative w-full max-w-screen-xl aspect-[4/3] sm:aspect-video mx-auto">
+        <Image
+          src={`${basePath}/images/artboard-6.png`}
+          alt="See you!"
+          fill
+          className="object-cover rounded-lg"
         />
-      <p className="text-sm uppercase tracking-widest text-foreground mt-4">&copy; {new Date().getFullYear()} Pepe & Pong.</p>
+      </div>
     </footer>
-)};
+  );
+};
 
 export default Footer;

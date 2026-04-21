@@ -1,12 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
+import ScratchCard from "./ScratchCard";
 
-const TARGET_DATE = new Date("2025-10-04T12:30:00"); // <- defined outside
-
-
-// image gif buat cincin sama tanggal nikah
+const TARGET_DATE = new Date("2026-10-04T12:30:00");
 
 interface TimeLeft {
   days: number;
@@ -32,7 +29,6 @@ const calculateTimeLeft = (targetDate: Date): TimeLeft => {
 };
 
 const Countdown = () => {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
 
   useEffect(() => {
@@ -41,88 +37,49 @@ const Countdown = () => {
 
     const timer = setInterval(update, 1000);
     return () => clearInterval(timer);
-  }, []); // ✅ Empty dependency array
+  }, []);
 
-  if (!timeLeft) return null; // or return a loading state
+  if (!timeLeft) return null;
 
   return (
-    <section className="py-16 bg-[#fefbf6] text-center">
-
-            {/* 🖼️ Fade + Zoom on scroll */}
+    <section className="py-16 bg-background text-center w-full flex flex-col items-center">
+      {/* Scratch Card Section */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7 }}
+        className="mb-16 -mt-8"
       >
-        <Image
-          src={`${basePath}/images/header.png`}
-          alt="Counting the Days Illustration"
-          width={450}
-          height={300}
-          className="mx-auto mb-6"
-        />
+        <p className="text-xl font-bold mb-4 font-sans tracking-wide">Scratch to reveal the date</p>
+        <div className="rotate-2 drop-shadow-lg">
+          <ScratchCard 
+            width={340} 
+            height={240} 
+            coverImageSrc={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/artboard-8.png`}
+            revealedContent={
+              <div className="flex flex-col items-center justify-center -rotate-2">
+                <span className="text-4xl font-sans font-bold tracking-widest text-[#253247]">04 . 10 . 2026</span>
+                <span className="text-xl mt-4 text-[#DEBA29] uppercase tracking-widest font-sans font-bold">Save the date</span>
+              </div>
+            } 
+          />
+        </div>
       </motion.div>
 
-      {/* 💬 Quote: fade + slide up on scroll */}
-      <motion.div
-        className="max-w-3xl mx-auto px-4 mb-10"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ delay: 0.1, duration: 0.8 }}
-      >
-        <p className="text-sm md:textlg text-[#7e6c5f] italic font-light leading-relaxed">
-          "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. 
-          It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs. 
-          Love does not delight in evil but rejoices with the truth. 
-          It always protects, always trusts, always hopes, always perseveres. <span className="text-lg md:text-xl "><b>Love never fails.</b></span>" <br />
-
-        </p>
-          <span className="text-sm block mt-2 text-[#7e6c5f] font-light leading-relaxed">- 1 Corinthians 13:4-8</span>
-      </motion.div>
-
-      {/* 📢 Title: fade in */}
+      {/* Countdown Section */}
       <motion.h2
-        className="text-3xl sm:text-4xl md:text-5xl font-[cinzel] text-[#44322a] mb-6"
+        className="text-6xl md:text-8xl font-script text-foreground mb-10"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ delay: 0.2, duration: 0.7 }}
       >
-        Counting the Days
+        Countdown
       </motion.h2>
 
-      {/* 🖼️ Fade + Zoom on scroll */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7 }}
-      >
-        <Image
-          src={`${basePath}/images/ring 2.png`}
-          alt="Counting the Days Illustration"
-          width={450}
-          height={300}
-          className="mx-auto mb-6"
-        />
-      </motion.div>
-
-      {/* 📣 Subtext: fade + slide up */}
-      <motion.p
-        className="text-[#9f9389] mb-8 font-light"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ delay: 0.3, duration: 0.7 }}
-      >
-        Until we say &nbsp; <span className="text-xl md:text-2xl ">"I do"</span>
-      </motion.p>
-
-      {/* ⏱️ Countdown: staggered fade + slide up */}
-      <motion.div
-        className="flex justify-center items-center gap-6 md:gap-12 text-[#44322a] font-[cinzel]"
+        className="flex justify-center items-center gap-4 sm:gap-8 text-foreground"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
@@ -136,24 +93,24 @@ const Countdown = () => {
         }}
       >
         {[
-          { label: "Days", value: timeLeft.days },
-          { label: "Hours", value: timeLeft.hours },
-          { label: "Minutes", value: timeLeft.minutes },
-          { label: "Seconds", value: timeLeft.seconds },
+          { label: "DAYS", value: timeLeft.days },
+          { label: "HOURS", value: timeLeft.hours },
+          { label: "MINUTES", value: timeLeft.minutes },
+          { label: "SECONDS", value: timeLeft.seconds },
         ].map(({ label, value }) => (
           <motion.div
             key={label}
-            className="flex flex-col items-center"
+            className="flex flex-col items-center w-16 sm:w-20"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.6 }}
           >
-            <div className="text-4xl md:text-5xl font-bold">
+            <div className="text-4xl md:text-5xl font-light tracking-widest">
               {value.toString().padStart(2, "0")}
             </div>
-            <span className="text-sm md:text-base tracking-widest mt-2">
+            <span className="text-[10px] sm:text-xs tracking-widest mt-2 uppercase font-semibold">
               {label}
             </span>
           </motion.div>
