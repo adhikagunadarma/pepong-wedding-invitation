@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+{/* TODO: Add photo and layout later*/}
 
 const PhotoPlaceholder = () => {
   return (

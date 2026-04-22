@@ -101,6 +101,9 @@ export default function WeddingGift() {
                         COPIED!
                       </div>
                     )}
+
+                  {/* TODO: ADD QR as well in here */}
+
                   </div>
                 ))}
               </div>

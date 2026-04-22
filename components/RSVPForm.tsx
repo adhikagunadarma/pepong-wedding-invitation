@@ -72,7 +72,7 @@ const RSVPForm = () => {
                   </p>
 
                   <iframe name="hidden_iframe" className="hidden" onLoad={() => { if(submitted) { } }}></iframe>
-
+                  {/* TODO: Update form link and adjust form_data.js */}
                   <form
                     action="https://docs.google.com/forms/d/e/1FAIpQLSdGMHhAzj3bm-UJaeIt88xo-BRRWRIYM0kjrK3a3-q5Pn8gqg/formResponse"
                     method="POST"

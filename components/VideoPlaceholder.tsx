@@ -1,6 +1,8 @@
 "use client";
 import React from 'react';
 
+{/* TODO: Add video later*/}
+
 const VideoPlaceholder = () => {
   return (
     <div className="w-full h-[400px] md:h-[600px] bg-[#9CBA7F] flex items-center justify-center border-y border-border">

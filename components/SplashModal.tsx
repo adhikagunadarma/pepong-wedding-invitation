@@ -8,6 +8,8 @@ const SplashModal = ({ guestName = "Guest" }: { guestName?: string }) => {
   const [isVisible, setIsVisible] = useState(true);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
+  {/* TODO: Remove and change to pepong theme */}
+
 
   useEffect(() => {
     document.body.style.overflow = showSplash ? "hidden" : "auto";
