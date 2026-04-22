@@ -74,7 +74,7 @@ const RSVPForm = () => {
                   <iframe name="hidden_iframe" className="hidden" onLoad={() => { if(submitted) { } }}></iframe>
 
                   <form
-                    // action="https://docs.google.com/forms/d/e/1FAIpQLSc6WuSZvXUkJy0Z5ckBbrLve3mqr_Bb_ShnKB8AvzJV3pQVGQ/formResponse"
+                    action="https://docs.google.com/forms/d/e/1FAIpQLSdGMHhAzj3bm-UJaeIt88xo-BRRWRIYM0kjrK3a3-q5Pn8gqg/formResponse"
                     method="POST"
                     target="hidden_iframe"
                     className="flex flex-col gap-4 text-left font-sans"
@@ -87,7 +87,7 @@ const RSVPForm = () => {
                       <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">Name</label>
                       <input 
                         type="text" 
-                        name="entry.56822025" 
+                        name="entry.971315001" 
                         required 
                         placeholder="John Doe"
                         className="w-full border border-border bg-white rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#9CBA7F]"
@@ -99,11 +99,11 @@ const RSVPForm = () => {
                       <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">Will you attend?</label>
                       <div className="flex flex-col gap-2">
                         <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.650001048" value="Yes!" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <input type="radio" name="entry.1218266958" value="Yes, I will attend" required className="accent-[#9CBA7F] w-4 h-4" />
                           <span className="text-sm">Yes, gladly!</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.650001048" value="No :(" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <input type="radio" name="entry.1218266958" value="No, I cannot attend" required className="accent-[#9CBA7F] w-4 h-4" />
                           <span className="text-sm">No, I'm sorry</span>
                         </label>
                       </div>
@@ -114,11 +114,11 @@ const RSVPForm = () => {
                       <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">Guests count</label>
                       <div className="flex flex-col gap-2">
                         <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.1294259475" value="1" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <input type="radio" name="entry.1443474651" value="1" required className="accent-[#9CBA7F] w-4 h-4" />
                           <span className="text-sm">1 Person</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.1294259475" value="2" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <input type="radio" name="entry.1443474651" value="2" required className="accent-[#9CBA7F] w-4 h-4" />
                           <span className="text-sm">2 People</span>
                         </label>
                       </div>
