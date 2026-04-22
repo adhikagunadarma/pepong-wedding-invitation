@@ -74,7 +74,7 @@ const RSVPForm = () => {
                   <iframe name="hidden_iframe" className="hidden" onLoad={() => { if(submitted) { } }}></iframe>
 
                   <form
-                    action="https://docs.google.com/forms/d/e/1FAIpQLSc6WuSZvXUkJy0Z5ckBbrLve3mqr_Bb_ShnKB8AvzJV3pQVGQ/formResponse"
+                    // action="https://docs.google.com/forms/d/e/1FAIpQLSc6WuSZvXUkJy0Z5ckBbrLve3mqr_Bb_ShnKB8AvzJV3pQVGQ/formResponse"
                     method="POST"
                     target="hidden_iframe"
                     className="flex flex-col gap-4 text-left font-sans"

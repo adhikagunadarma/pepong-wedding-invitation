@@ -23,7 +23,7 @@ const WeddingWishes = () => {
       if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return;
 
       const { data, error } = await supabase
-        .from("arya_lizzy_wish_wedding")
+        .from("pepong_wish_wedding")
         .select("*")
         .order("created_at", { ascending: true });
 
@@ -52,7 +52,7 @@ const WeddingWishes = () => {
 
     if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
       const { error } = await supabase
-        .from("arya_lizzy_wish_wedding")
+        .from("pepong_wish_wedding")
         .insert(newWish);
 
       if (!error) {
