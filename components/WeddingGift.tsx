@@ -5,7 +5,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 
-// todo : add the correct one 
+// todo : add the correct gift information, deadline: 2026-05-10 
 const bankInfos = [
   { name: "Pepe", account: "7310401425", bank: "BCA" },
   { name: "Pong", account: "3452633628", bank: "BCA" }
