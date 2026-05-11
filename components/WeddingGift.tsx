@@ -7,8 +7,8 @@ import Image from "next/image"
 
 // todo : add the correct one 
 const bankInfos = [
-  { name: "Pepe", account: "7310401425", bank: "BCA" },
-  { name: "Pong", account: "3452633628", bank: "BCA" }
+  { name: "Josephine Fransisca", account: "0183863891", bank: "BCA" },
+  { name: "Adhika Gunadarma", account: "6044437273", bank: "BCA" }
 ]
 
 export default function WeddingGift() {

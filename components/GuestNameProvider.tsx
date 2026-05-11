@@ -1,12 +1,24 @@
 // components/GuestNameProvider.tsx
 "use client";
 
+import { createContext, useContext } from "react";
 import { useSearchParams } from "next/navigation";
 import SplashModal from "./SplashModal";
 
-export default function GuestNameProvider() {
+const GuestNameContext = createContext<string>("Guest");
+
+export function useGuestName() {
+  return useContext(GuestNameContext);
+}
+
+export default function GuestNameProvider({ children }: { children?: React.ReactNode }) {
   const searchParams = useSearchParams();
   const guestName = searchParams.get("to") || "Guest";
 
-  return <SplashModal guestName={guestName} />;
+  return (
+    <GuestNameContext.Provider value={guestName}>
+      <SplashModal guestName={guestName} />
+      {children}
+    </GuestNameContext.Provider>
+  );
 }

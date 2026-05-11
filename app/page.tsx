@@ -18,8 +18,7 @@ export default function Home() {
     <main className="flex flex-col relative w-full items-center">
       <div className="w-full max-w-screen-xl mx-auto bg-background min-h-screen relative overflow-hidden flex flex-col items-center">
         <Suspense fallback={null}>
-          <GuestNameProvider />
-        </Suspense>
+          <GuestNameProvider>
         
         <Hero />
         <Countdown />
@@ -44,6 +43,9 @@ export default function Home() {
         <WeddingGift />
 
         <Footer />
+
+          </GuestNameProvider>
+        </Suspense>
       </div>
     </main>
   );

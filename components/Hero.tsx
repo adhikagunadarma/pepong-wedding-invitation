@@ -17,7 +17,7 @@ const Hero = () => {
 
       <div className="text-center px-8 py-12 bg-background w-full">
         <p className="text-sm md:text-base text-foreground max-w-lg mx-auto font-sans leading-relaxed">
-          Two souls, one heart, a lifetime of love. We joyfully invite you to share in our happiness as we unite in marriage and begin this beautiful new chapter of our lives together.
+          We're getting married and we'd love for you to be there to celebrate with us.
         </p>
       </div>
     </section>

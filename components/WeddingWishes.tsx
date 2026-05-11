@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { motion } from "framer-motion";
+import { useGuestName } from "./GuestNameProvider";
 
 interface Wish {
   name: string;
@@ -11,8 +12,10 @@ interface Wish {
 }
 
 const WeddingWishes = () => {
+  const guestName = useGuestName();
+  const defaultName = guestName !== "Guest" ? guestName : "";
   const [wishes, setWishes] = useState<Wish[]>([]);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(defaultName);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -71,7 +74,7 @@ const WeddingWishes = () => {
   return (
     <section className="w-full bg-[#F2EBE1] flex flex-col items-center pb-16">
       
-      {/* FAQ Placeholder */}
+      {/* FAQ */}
       <div className="w-full max-w-sm mb-20 text-center">
         <motion.h2
           className="text-6xl md:text-8xl font-script text-foreground mb-8 text-center"
@@ -79,11 +82,49 @@ const WeddingWishes = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          Faq?
+          FAQ
         </motion.h2>
-        <p className="text-sm font-sans leading-relaxed text-foreground text-left px-8">
-          Have an inquiry about the wedding details? Feel free to reach out to our team, and we will be delighted to assist you with everything you need.
-        </p>
+        <div className="flex flex-col gap-4 text-left px-6">
+          {[
+            {
+              q: "When and where is the ceremony?",
+              a: "The ceremony will be held on June 20, 2026 at Katedral Santo Petrus, Jl. Merdeka No.14, Bandung. Doors open at 12:00 PM.",
+            },
+            {
+              q: "Is there a dress code?",
+              a: "Semi-formal attire is suggested. We'd love for guests to wear earth tones or pastels, but feel free to dress comfortably.",
+            },
+            {
+              q: "Can I bring a plus one?",
+              a: "Due to limited seating, we kindly ask that only those named in the invitation attend. Please check your RSVP for guest count details.",
+            },
+            {
+              q: "Is parking available?",
+              a: "Yes, there is parking available near the venue. We'll share more details closer to the date.",
+            },
+            {
+              q: "Will the event be indoors or outdoors?",
+              a: "The ceremony will be indoors at the cathedral. Please plan accordingly.",
+            },
+            {
+              q: "Who do I contact if I have more questions?",
+              a: "Feel free to reach out to us directly via WhatsApp or message us on Instagram. We're happy to help!",
+            },
+          ].map((item, idx) => (
+            <details
+              key={idx}
+              className="group border border-border rounded-lg bg-[#E5DFC5] overflow-hidden"
+            >
+              <summary className="cursor-pointer px-4 py-3 text-sm font-bold font-sans tracking-wide text-foreground flex items-center justify-between">
+                {item.q}
+                <span className="ml-2 text-xs transition-transform group-open:rotate-45">＋</span>
+              </summary>
+              <p className="px-4 pb-3 text-sm font-sans leading-relaxed text-foreground/80">
+                {item.a}
+              </p>
+            </details>
+          ))}
+        </div>
       </div>
 
       <motion.h2

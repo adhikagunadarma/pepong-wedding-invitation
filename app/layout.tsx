@@ -33,8 +33,8 @@ const basisGrotesque = localFont({
   variable: "--font-sans",
 });
 
-const madelyn = localFont({
-  src: "../public/fonts/Madelyn-Trial-Regular.ttf",
+const maisonduSoleil = localFont({
+  src: "../public/fonts/MaisonduSoleil-Script.ttf",
   variable: "--font-script",
 });
 
@@ -42,7 +42,7 @@ export const metadata = {
   title: "The Wedding of Pepe & Pong",
   description: "Join us in celebrating the wedding of Pepe & Pong.",
   icons: {
-    icon: "/carry.png",
+    icon: "/images/thumbnail.png",
   },
 };
 
@@ -53,7 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${basisGrotesque.variable} ${madelyn.variable} font-sans bg-[#F2EBE1] text-[#333333] antialiased`}>
+      <body className={`${basisGrotesque.variable} ${maisonduSoleil.variable} font-sans bg-[#F2EBE1] text-[#333333] antialiased`}>
         {children}
         <AudioPlayer />
       </body>

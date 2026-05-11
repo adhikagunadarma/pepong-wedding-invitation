@@ -40,7 +40,7 @@ const Couple = () => {
           />
           <div className="w-[300px] mt-2">
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
-               A heart full of dreams, a gentle spirit, and a smile that lights up the world.
+               Warm, thoughtful, and always the first to laugh. She finds joy in the little things and makes everyone around her feel at home.
             </p>
           </div>
         </motion.div>
@@ -60,7 +60,7 @@ const Couple = () => {
           />
           <div className="w-[300px] mt-2">
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
-               A steady hand, a caring heart, and a love designed to last a lifetime.
+               Quiet but dependable, with a dry sense of humor and a knack for fixing things — including bad days.
             </p>
           </div>
         </motion.div>

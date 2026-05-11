@@ -58,7 +58,7 @@ const Countdown = () => {
             coverImageSrc={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/artboard-8.png`}
             revealedContent={
               <div className="flex flex-col items-center justify-center -rotate-2">
-                <span className="text-4xl font-sans font-bold tracking-widest text-[#253247]">04 . 10 . 2026</span>
+                <span className="text-4xl font-sans font-bold tracking-widest text-[#253247]">20 . 06 . 2026</span>
                 <span className="text-xl mt-4 text-[#DEBA29] uppercase tracking-widest font-sans font-bold">Save the date</span>
               </div>
             } 
