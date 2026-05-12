@@ -6,186 +6,165 @@ import Image from "next/image";
 const SplashModal = ({ guestName = "Guest" }: { guestName?: string }) => {
   const [showSplash, setShowSplash] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
-  const [isFlyingAway, setIsFlyingAway] = useState(false);
-  const [hasLanded, setHasLanded] = useState(false);
+  const [phase, setPhase] = useState<"enter" | "idle" | "exit">("enter");
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
+  // Trigger the fly-in transition after first paint
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    // Bird "lands" after flying in
-    const timer = setTimeout(() => setHasLanded(true), 1200);
-    return () => clearTimeout(timer);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setMounted(true));
+    });
   }, []);
+
+  // Bird enters → lands after 1.2s
+  useEffect(() => {
+    const t = setTimeout(() => setPhase("idle"), 1200);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Floating animation via a second state toggle
+  const [floatUp, setFloatUp] = useState(false);
+  useEffect(() => {
+    if (phase !== "idle") return;
+    const interval = setInterval(() => setFloatUp((v) => !v), 1500);
+    return () => clearInterval(interval);
+  }, [phase]);
 
   useEffect(() => {
     document.body.style.overflow = showSplash ? "hidden" : "auto";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [showSplash]);
-
-  useEffect(() => {
-    if (!showSplash) {
-      const timer = setTimeout(() => setIsVisible(false), 1200);
-      return () => clearTimeout(timer);
-    }
+    return () => { document.body.style.overflow = "auto"; };
   }, [showSplash]);
 
   const handleOpenInvitation = () => {
-    setIsFlyingAway(true);
-    setTimeout(() => setShowSplash(false), 800);
+    setPhase("exit");
+    window.dispatchEvent(new CustomEvent("invitation-opened"));
+    setTimeout(() => {
+      setShowSplash(false);
+      setTimeout(() => setIsVisible(false), 600);
+    }, 800);
   };
 
   if (!isVisible) return null;
 
-  return (
-    <>
-      <style jsx>{`
-        @keyframes flyIn {
-          0% {
-            transform: translate(120%, -80%) rotate(15deg) scale(0.5);
-            opacity: 0;
-          }
-          40% {
-            transform: translate(-5%, 5%) rotate(-5deg) scale(1.05);
-            opacity: 1;
-          }
-          60% {
-            transform: translate(3%, -3%) rotate(3deg) scale(0.98);
-            opacity: 1;
-          }
-          80% {
-            transform: translate(-1%, 1%) rotate(-1deg) scale(1.01);
-          }
-          100% {
-            transform: translate(0, 0) rotate(0deg) scale(1);
-            opacity: 1;
-          }
-        }
-        @keyframes gentleFloat {
-          0%, 100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          25% {
-            transform: translateY(-6px) rotate(0.5deg);
-          }
-          75% {
-            transform: translateY(4px) rotate(-0.5deg);
-          }
-        }
-        @keyframes flyAway {
-          0% {
-            transform: translate(0, 0) rotate(0deg) scale(1);
-            opacity: 1;
-          }
-          30% {
-            transform: translate(0, 10px) rotate(-5deg) scale(1.05);
-            opacity: 1;
-          }
-          100% {
-            transform: translate(-150%, -200%) rotate(-20deg) scale(0.3);
-            opacity: 0;
-          }
-        }
-        @keyframes fadeSlideUp {
-          0% {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes pulseGlow {
-          0%, 100% {
-            box-shadow: 0 0 0 0 rgba(68, 50, 42, 0.3);
-          }
-          50% {
-            box-shadow: 0 0 20px 6px rgba(68, 50, 42, 0.15);
-          }
-        }
-        .bird-fly-in {
-          animation: flyIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        .bird-float {
-          animation: gentleFloat 3s ease-in-out infinite;
-        }
-        .bird-fly-away {
-          animation: flyAway 0.8s cubic-bezier(0.55, 0, 1, 0.45) forwards;
-        }
-        .text-fade-in {
-          opacity: 0;
-          animation: fadeSlideUp 0.6s ease-out forwards;
-        }
-        .btn-pulse {
-          animation: pulseGlow 2s ease-in-out infinite;
-        }
-      `}</style>
-      <div
-        className={`fixed inset-0 z-[1000] bg-[#fdfbf0] transition-opacity duration-500 ${
-          showSplash ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        {/* Background */}
-        <div className="absolute inset-0 backdrop-blur-md bg-[#fdfbf0]/80" />
+  // Compute bird transform based on phase
+  let birdTransform = "translate(120%, -80%) rotate(15deg) scale(0.5)";
+  let birdOpacity = 0;
+  let birdTransition = "transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease";
 
-        {/* Modal */}
-        <div className="relative z-10 bg-[#fdfbf0] flex items-center justify-center h-full px-4">
-          <div className="bg-[#fdfbf0] rounded-2xl shadow-2xl max-w-xl w-full overflow-hidden text-center border border-[#e6e0d6]">
-            <div className="px-6 pt-6 bg-[#fdfbf0] relative z-10">
-              <p
-                className="text-[#44322a] text-sm sm:text-base mb-2 text-fade-in"
-                style={{ animationDelay: "1.3s" }}
-              >
-                Dear <span className="font-semibold">{guestName}</span>,
-              </p>
-            </div>
-            <button
-              onClick={handleOpenInvitation}
-              className={`cursor-pointer ${
-                isFlyingAway
-                  ? "bird-fly-away"
-                  : hasLanded
-                  ? "bird-float"
-                  : "bird-fly-in"
-              }`}
-              aria-label="Open Invitation"
+  if (phase === "idle") {
+    birdTransform = floatUp
+      ? "translateY(-6px) rotate(0.5deg)"
+      : "translateY(4px) rotate(-0.5deg)";
+    birdOpacity = 1;
+    birdTransition = "transform 1.5s ease-in-out, opacity 0.4s ease";
+  } else if (phase === "enter") {
+    if (mounted) {
+      // Transition TO landed position
+      birdTransform = "translate(0, 0) rotate(0deg) scale(1)";
+      birdOpacity = 1;
+    }
+    // else: stays at initial offscreen position
+  } else if (phase === "exit") {
+    birdTransform = "translate(-150%, -200%) rotate(-20deg) scale(0.3)";
+    birdOpacity = 0;
+    birdTransition = "transform 0.8s cubic-bezier(0.55, 0, 1, 0.45), opacity 0.6s ease";
+  }
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 1000,
+        backgroundColor: "#fdfbf0",
+        opacity: showSplash ? 1 : 0,
+        transition: "opacity 0.5s ease",
+        pointerEvents: showSplash ? "auto" : "none",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          padding: "1rem",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "#fdfbf0",
+            borderRadius: "1rem",
+            boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
+            maxWidth: "32rem",
+            width: "100%",
+            overflow: "hidden",
+            textAlign: "center",
+            border: "1px solid #e6e0d6",
+          }}
+        >
+          {/* Guest name */}
+          <div style={{ padding: "1.5rem 1.5rem 0", position: "relative", zIndex: 10 }}>
+            <p
+              style={{
+                color: "#44322a",
+                fontSize: "0.95rem",
+                marginBottom: "0.5rem",
+                fontFamily: "var(--font-sans)",
+                opacity: phase === "enter" ? 0 : 1,
+                transform: phase === "enter" ? "translateY(20px)" : "translateY(0)",
+                transition: "opacity 0.6s ease 1.3s, transform 0.6s ease 1.3s",
+              }}
             >
-              <Image
-                src={`${basePath}/images/opening.png`}
-                alt="Bird carrying a love letter — tap to open"
-                width={800}
-                height={400}
-                className="w-full h-auto object-cover"
-                priority
-              />
-              {hasLanded && !isFlyingAway && (
-                <p
-                  className="text-xs text-[#9f9389] mt-1 text-fade-in animate-pulse"
-                  style={{ animationDelay: "1.4s" }}
-                >
-                  Tap the bird to open
-                </p>
-              )}
-            </button>
-            <div className="px-6 -mt-20 pb-8 bg-[#fdfbf0] relative z-10">
-              <h1
-                className="text-sm sm:text-base md:text-lg font-light tracking-widest text-[#9f9389] uppercase mb-2 text-fade-in"
-                style={{ animationDelay: "1.5s" }}
-              >
-                The Wedding of
-              </h1>
-              <h2
-                className="text-4xl sm:text-5xl md:text-6xl font-script text-[#44322a] mb-6 text-fade-in"
-                style={{ animationDelay: "1.7s" }}
-              >
-                Adhika & Josephine
-              </h2>
-            </div>
+              Dear <span style={{ fontWeight: 600 }}>{guestName}</span>,
+            </p>
           </div>
+
+          {/* Bird image */}
+          <button
+            onClick={handleOpenInvitation}
+            style={{
+              cursor: "pointer",
+              background: "none",
+              border: "none",
+              padding: 0,
+              width: "100%",
+              transform: birdTransform,
+              opacity: birdOpacity,
+              transition: birdTransition,
+            }}
+            aria-label="Open Invitation"
+          >
+            <Image
+              src={`${basePath}/images/opening.png`}
+              alt="Bird carrying a love letter — tap to open"
+              width={800}
+              height={400}
+              style={{ width: "100%", height: "auto", objectFit: "cover" }}
+              priority
+            />
+          </button>
+
+          {/* Tap hint */}
+          {phase === "idle" && (
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "#9f9389",
+                padding: "0.25rem 0 1rem",
+                opacity: floatUp ? 0.6 : 1,
+                transition: "opacity 1.5s ease",
+              }}
+            >
+              Tap the bird to open
+            </p>
+          )}
+
+          <div style={{ padding: "0 1.5rem", marginTop: "-5rem", paddingBottom: "2rem", position: "relative", zIndex: 10 }} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

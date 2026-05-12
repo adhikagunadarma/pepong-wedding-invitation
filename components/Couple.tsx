@@ -17,7 +17,7 @@ const Couple = () => {
       </motion.h2>
 
       <motion.div
-        className="flex flex-col md:flex-row gap-12 md:gap-8 justify-center items-end max-w-5xl mx-auto"
+        className="flex flex-col md:flex-row gap-12 md:gap-8 justify-center items-start max-w-5xl mx-auto"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}

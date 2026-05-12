@@ -8,20 +8,28 @@ const AudioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  // Try autoplay muted on mount
   useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      audio.muted = true; // force muted
+    const handleInvitationOpened = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      audio.muted = false;
+      audio.currentTime = 0;
       audio
         .play()
-        .then(() => {
-          console.log("Muted autoplay started");
-        })
-        .catch(err => {
-          console.warn("Muted autoplay blocked:", err);
+        .then(() => setPlaying(true))
+        .catch(() => {
+          // Fallback: some browsers need a tiny delay
+          setTimeout(() => {
+            audio
+              .play()
+              .then(() => setPlaying(true))
+              .catch((err) => console.warn("Autoplay blocked:", err));
+          }, 100);
         });
-    }
+    };
+
+    window.addEventListener("invitation-opened", handleInvitationOpened);
+    return () => window.removeEventListener("invitation-opened", handleInvitationOpened);
   }, []);
 
   const togglePlay = () => {
@@ -29,7 +37,7 @@ const AudioPlayer = () => {
     if (!audio) return;
 
     if (audio.paused) {
-      audio.muted = false; // unmute on user action
+      audio.muted = false;
       audio
         .play()
         .then(() => setPlaying(true))

@@ -42,7 +42,10 @@ export const metadata = {
   title: "The Wedding of Pepe & Pong",
   description: "Join us in celebrating the wedding of Pepe & Pong.",
   icons: {
-    icon: "/images/thumbnail.png",
+    icon: [
+      { url: "/images/thumbnail.png", type: "image/png" },
+    ],
+    apple: "/images/thumbnail.png",
   },
 };
 

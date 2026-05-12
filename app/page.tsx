@@ -9,8 +9,8 @@ import WeddingGift from "@/components/WeddingGift";
 import Footer from "@/components/Footer";
 import GuestNameProvider from "@/components/GuestNameProvider";
 import Divider from "@/components/Divider";
-import PhotoPlaceholder from "@/components/PhotoPlaceholder";
-import VideoPlaceholder from "@/components/VideoPlaceholder";
+import FilmstripGallery from "@/components/FilmstripGallery";
+import VideoSection from "@/components/Videostory";
 import { Suspense } from "react";
 
 export default function Home() {
@@ -26,12 +26,11 @@ export default function Home() {
         
         <Divider />
         <Gallery />
+        <FilmstripGallery />
+        <VideoSection />
         
         <Divider />
         <EventDetails />
-        
-        <PhotoPlaceholder />
-        <VideoPlaceholder />
 
         <Divider />
         <RSVPForm />

@@ -5,12 +5,13 @@ const Hero = () => {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   return (
     <section className="w-full flex flex-col items-center relative overflow-hidden">
-      <div className="relative w-full aspect-[4/3] sm:aspect-video flex justify-center items-center bg-[#51633F]">
+      <div className="relative w-full flex justify-center items-center bg-[#51633F]">
         <Image
           src={`${basePath}/images/artboard-1.png`}
           alt="Adhika & Josephine"
-          fill
-          className="object-cover"
+          width={1366}
+          height={768}
+          className="w-full h-auto object-contain"
           priority
         />
       </div>

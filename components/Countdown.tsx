@@ -28,6 +28,46 @@ const calculateTimeLeft = (targetDate: Date): TimeLeft => {
   return timeLeft;
 };
 
+const GOOGLE_CALENDAR_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+  "&text=Wedding+of+Adhika+%26+Josephine" +
+  "&dates=20260620T053000Z/20260620T070000Z" +
+  "&details=We+would+be+honored+to+have+you+celebrate+our+special+day+with+us." +
+  "&location=Katedral+Santo+Petrus+Bandung%2C+Jl.+Merdeka+No.14%2C+Bandung" +
+  "&sf=true&output=xml";
+
+const generateICS = () => {
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Wedding//EN",
+    "BEGIN:VEVENT",
+    "DTSTART:20260620T053000Z",
+    "DTEND:20260620T070000Z",
+    "SUMMARY:Wedding of Adhika & Josephine",
+    "DESCRIPTION:We would be honored to have you celebrate our special day with us.",
+    "LOCATION:Katedral Santo Petrus Bandung\, Jl. Merdeka No.14\, Bandung",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "wedding-adhika-josephine.ics";
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+const handleSaveTheDate = () => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    generateICS();
+  } else {
+    window.open(GOOGLE_CALENDAR_URL, "_blank", "noopener,noreferrer");
+  }
+};
+
 const Countdown = () => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
 
@@ -59,7 +99,15 @@ const Countdown = () => {
             revealedContent={
               <div className="flex flex-col items-center justify-center -rotate-2">
                 <span className="text-4xl font-sans font-bold tracking-widest text-[#253247]">20 . 06 . 2026</span>
-                <span className="text-xl mt-4 text-[#DEBA29] uppercase tracking-widest font-sans font-bold">Save the date</span>
+                <button
+                  onClick={handleSaveTheDate}
+                  className="mt-4 inline-flex items-center gap-2 bg-[#253247] text-white px-5 py-2 rounded-full text-xs font-sans font-bold uppercase tracking-widest hover:bg-[#1a2435] transition-colors relative z-20 cursor-pointer"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Save the date
+                </button>
               </div>
             } 
           />
