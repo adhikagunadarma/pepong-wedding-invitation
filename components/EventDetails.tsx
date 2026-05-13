@@ -42,6 +42,14 @@ const EventDetails = () => {
           </div>
 
           <div className="mb-8">
+            <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Date & Time:</h3>
+            <p className="text-sm font-sans leading-relaxed text-foreground">
+              Saturday, 20 June 2026<br />
+              12:30 — 14:00 WIB
+            </p>
+          </div>
+
+          <div className="mb-8">
             <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Location:</h3>
             <p className="text-sm font-sans leading-relaxed text-foreground">
               Katedral Santo Petrus Bandung <br />

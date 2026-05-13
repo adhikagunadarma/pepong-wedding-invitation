@@ -5,35 +5,38 @@ const GALLERY_COUNT = 9;
 const filmPhotos = Array.from({ length: GALLERY_COUNT }, (_, i) => `/images/gallery-${i + 1}.jpg`);
 
 const FilmstripGallery = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>(0);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const offsetRef = useRef(0);
   const speedRef = useRef(0.5);
   const targetSpeedRef = useRef(0.5);
   const isPausedRef = useRef(false);
   const lastTouchXRef = useRef<number | null>(null);
   const lastTouchTimeRef = useRef<number>(0);
+  const singleSetWidthRef = useRef(0);
   const [isHolding, setIsHolding] = useState(false);
 
   // Duplicate photos for seamless infinite scroll
   const photos = [...filmPhotos, ...filmPhotos, ...filmPhotos];
 
   const autoScroll = useCallback(() => {
-    const el = scrollRef.current;
+    const el = stripRef.current;
     if (!el) return;
 
-    // Smoothly interpolate speed back to base
     if (!isPausedRef.current) {
       speedRef.current += (targetSpeedRef.current - speedRef.current) * 0.05;
-      el.scrollLeft += speedRef.current;
+      offsetRef.current -= speedRef.current;
     }
 
-    // Reset scroll for seamless loop
-    const singleSetWidth = el.scrollWidth / 3;
-    if (el.scrollLeft >= singleSetWidth * 2) {
-      el.scrollLeft -= singleSetWidth;
-    } else if (el.scrollLeft <= 0) {
-      el.scrollLeft += singleSetWidth;
+    // Seamless loop
+    const sw = singleSetWidthRef.current;
+    if (sw > 0) {
+      if (offsetRef.current <= -sw * 2) {
+        offsetRef.current += sw;
+      } else if (offsetRef.current >= 0) {
+        offsetRef.current -= sw;
+      }
     }
 
     // Gradually return to base speed
@@ -43,15 +46,26 @@ const FilmstripGallery = () => {
       targetSpeedRef.current = 0.5;
     }
 
+    el.style.transform = `translateX(${offsetRef.current}px)`;
     animationRef.current = requestAnimationFrame(autoScroll);
   }, []);
 
   useEffect(() => {
-    const el = scrollRef.current;
+    const el = stripRef.current;
     if (!el) return;
 
-    // Start scroll from the middle set
-    el.scrollLeft = el.scrollWidth / 3;
+    // Measure single set width after images render
+    const measure = () => {
+      const totalWidth = el.scrollWidth;
+      singleSetWidthRef.current = totalWidth / 3;
+      offsetRef.current = -singleSetWidthRef.current;
+      el.style.transform = `translateX(${offsetRef.current}px)`;
+    };
+
+    // Wait for layout
+    requestAnimationFrame(() => {
+      requestAnimationFrame(measure);
+    });
 
     animationRef.current = requestAnimationFrame(autoScroll);
     return () => cancelAnimationFrame(animationRef.current);
@@ -71,8 +85,6 @@ const FilmstripGallery = () => {
 
   // Swipe / drag to fling
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    const el = scrollRef.current;
-    if (!el) return;
     const touchX = e.touches[0].clientX;
     const now = Date.now();
 
@@ -81,8 +93,8 @@ const FilmstripGallery = () => {
       const dt = Math.max(now - lastTouchTimeRef.current, 1);
       const velocity = delta / dt;
 
-      // Directly scroll while dragging
-      el.scrollLeft += delta;
+      // Directly move while dragging
+      offsetRef.current -= delta;
 
       // Set fling speed based on swipe velocity
       targetSpeedRef.current = velocity * 15;
@@ -94,8 +106,6 @@ const FilmstripGallery = () => {
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isPausedRef.current) return;
-    const el = scrollRef.current;
-    if (!el) return;
     const mouseX = e.clientX;
     const now = Date.now();
 
@@ -104,7 +114,7 @@ const FilmstripGallery = () => {
       const dt = Math.max(now - lastTouchTimeRef.current, 1);
       const velocity = delta / dt;
 
-      el.scrollLeft += delta;
+      offsetRef.current -= delta;
       targetSpeedRef.current = velocity * 15;
     }
 
@@ -142,12 +152,15 @@ const FilmstripGallery = () => {
           <Perforations />
         </div>
 
-        {/* Scrollable photos */}
+        {/* Scrollable photos — using transform instead of scrollLeft for iOS compatibility */}
         <div
-          ref={scrollRef}
-          className="flex gap-1 overflow-x-hidden px-1"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
+          style={{ overflow: "hidden" }}
         >
+          <div
+            ref={stripRef}
+            className="flex gap-1 px-1"
+            style={{ willChange: "transform" }}
+          >
           {photos.map((src, i) => (
             <div
               key={i}
@@ -160,8 +173,7 @@ const FilmstripGallery = () => {
                 draggable={false}
               />
             </div>
-          ))}
-        </div>
+          ))}          </div>        </div>
 
         {/* Bottom perforations */}
         <div className="relative h-6 md:h-7 flex items-center overflow-hidden">
