@@ -60,16 +60,12 @@ const generateICS = () => {
 };
 
 const handleSaveTheDate = () => {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  if (isMobile) {
-    generateICS();
-  } else {
-    window.open(GOOGLE_CALENDAR_URL, "_blank", "noopener,noreferrer");
-  }
+  window.open(GOOGLE_CALENDAR_URL, "_blank", "noopener,noreferrer");
 };
 
 const Countdown = () => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
+  const [dateRevealed, setDateRevealed] = useState(false);
 
   useEffect(() => {
     const update = () => setTimeLeft(calculateTimeLeft(TARGET_DATE));
@@ -96,25 +92,36 @@ const Countdown = () => {
             width={340} 
             height={240} 
             coverImageSrc={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/artboard-8.png`}
+            onReveal={() => setDateRevealed(true)}
             revealedContent={
               <div className="flex flex-col items-center justify-center -rotate-2">
                 <span className="text-4xl font-sans font-bold tracking-widest text-[#253247]">20 . 06 . 2026</span>
-                <button
-                  onClick={handleSaveTheDate}
-                  className="mt-4 inline-flex items-center gap-2 bg-[#253247] text-white px-5 py-2 rounded-full text-xs font-sans font-bold uppercase tracking-widest hover:bg-[#1a2435] transition-colors relative z-20 cursor-pointer"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  Save the date
-                </button>
               </div>
-            } 
+            }
+            revealedAction={
+              <button
+                onClick={handleSaveTheDate}
+                className="-rotate-2 inline-flex items-center gap-2 bg-[#253247] text-white px-5 py-2 rounded-full text-xs font-sans font-bold uppercase tracking-widest hover:bg-[#1a2435] transition-colors cursor-pointer"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Save the date
+              </button>
+            }
           />
         </div>
       </motion.div>
 
-      {/* Countdown Section */}
+      {/* Countdown Section — revealed after scratch */}
+      <div
+        style={{
+          opacity: dateRevealed ? 1 : 0,
+          transform: dateRevealed ? "translateY(0)" : "translateY(20px)",
+          transition: "opacity 0.8s ease, transform 0.8s ease",
+          pointerEvents: dateRevealed ? "auto" : "none",
+        }}
+      >
       <motion.h2
         className="text-6xl md:text-8xl font-script text-foreground mb-10"
         initial={{ opacity: 0 }}
@@ -163,6 +170,7 @@ const Countdown = () => {
           </motion.div>
         ))}
       </motion.div>
+      </div>
     </section>
   );
 };

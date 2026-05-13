@@ -15,7 +15,7 @@ const Gallery = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          story
+          Story
         </motion.h2>
 
         <motion.div

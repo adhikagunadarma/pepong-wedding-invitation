@@ -25,7 +25,7 @@ const VideoSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        our film
+        Our Film
       </motion.h2>
 
       <motion.div

@@ -13,7 +13,7 @@ const Couple = () => {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.3 }}
       >
-        Meet the couple
+        Meet The Couple
       </motion.h2>
 
       <motion.div
@@ -40,7 +40,7 @@ const Couple = () => {
           />
           <div className="w-[300px] mt-2">
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
-               Warm, thoughtful, and always the first to laugh. She finds joy in the little things and makes everyone around her feel at home.
+              Quiet but dependable, with a dry sense of humor and a knack for fixing things — including bad days.
             </p>
           </div>
         </motion.div>
@@ -55,12 +55,12 @@ const Couple = () => {
         >
           <img
             src={`${basePath}/images/artboard-2.png`}
-            alt="Adhika Gunadarma"
+            alt="Adhika"
             className="h-[380px] md:h-[460px] w-auto object-contain"
           />
           <div className="w-[300px] mt-2">
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
-               Quiet but dependable, with a dry sense of humor and a knack for fixing things — including bad days.
+               Warm, thoughtful, and always the first to laugh. He finds joy in the little things and makes everyone around him feel at home.
             </p>
           </div>
         </motion.div>

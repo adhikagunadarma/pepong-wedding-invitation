@@ -5,7 +5,9 @@ interface ScratchCardProps {
   width: number;
   height: number;
   revealedContent: React.ReactNode;
+  revealedAction?: React.ReactNode;
   coverImageSrc?: string;
+  onReveal?: () => void;
 }
 
 // Continuous scratch sound using Web Audio API
@@ -72,7 +74,7 @@ class ScratchAudio {
   }
 }
 
-const ScratchCard: React.FC<ScratchCardProps> = ({ width, height, revealedContent, coverImageSrc }) => {
+const ScratchCard: React.FC<ScratchCardProps> = ({ width, height, revealedContent, revealedAction, coverImageSrc, onReveal }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const scratchAudioRef = useRef<ScratchAudio | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -92,6 +94,7 @@ const ScratchCard: React.FC<ScratchCardProps> = ({ width, height, revealedConten
     const percent = transparent / (pixels.length / 4);
     if (percent > 0.65) {
       setIsRevealed(true);
+      onReveal?.();
     }
   }, [width, height]);
 
@@ -184,10 +187,12 @@ const ScratchCard: React.FC<ScratchCardProps> = ({ width, height, revealedConten
       style={{ width, height }}
       className="relative mx-auto rounded-lg bg-transparent flex items-center justify-center p-0 overflow-visible"
     >
-      <div className="absolute inset-0 flex items-center justify-center text-center">
+      {/* Content always visible behind canvas */}
+      <div className="absolute inset-0 flex items-center justify-center text-center z-0">
         {revealedContent}
       </div>
 
+      {/* Canvas on top covers content until scratched */}
       <canvas
         ref={canvasRef}
         width={width}
@@ -199,17 +204,32 @@ const ScratchCard: React.FC<ScratchCardProps> = ({ width, height, revealedConten
         onTouchStart={handleStart}
         onTouchMove={handleMove}
         onTouchEnd={handleEnd}
-        className="absolute top-0 left-0 w-full h-full cursor-crosshair z-10 touch-none drop-shadow-md"
+        className="absolute top-0 left-0 w-full h-full z-10 touch-none drop-shadow-md cursor-crosshair"
       />
 
-      {/* Once revealed, overlay an invisible layer for the button so it's clickable above the canvas */}
-      {isRevealed && (
-        <div className="absolute inset-0 flex items-center justify-center text-center z-20 pointer-events-none">
-          <div className="pointer-events-auto">
-            {revealedContent}
+      {/* Once revealed, overlay just the action button above the canvas */}
+      {isRevealed && revealedAction && (
+        <div
+          className="absolute inset-0 flex items-end justify-center pb-6 z-20 pointer-events-none"
+        >
+          <div
+            className="pointer-events-auto"
+            style={{
+              opacity: 0,
+              animation: "fadeIn 0.5s ease forwards",
+            }}
+          >
+            {revealedAction}
           </div>
         </div>
       )}
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}} />
     </div>
   );
 };

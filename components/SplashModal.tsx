@@ -3,33 +3,65 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+// Ordered by section appearance: Hero → Countdown → Couple → Gallery → FilmstripGallery → EventDetails → RSVPForm → WeddingGift → Footer
+const PRELOAD_IMAGES = [
+  "/images/artboard-1.png",      // Hero
+  "/images/artboard-8.png",      // Countdown (scratch card cover)
+  "/images/artboard-2.png",      // Couple (groom)
+  "/images/artboard-2-copy.png", // Couple (bride)
+  "/images/artboard-3.png",      // Gallery
+  "/images/gallery-1.jpg",       // Filmstrip
+  "/images/gallery-2.jpg",
+  "/images/gallery-3.jpg",
+  "/images/gallery-4.jpg",
+  "/images/gallery-5.jpg",
+  "/images/gallery-6.jpg",
+  "/images/gallery-7.jpg",
+  "/images/gallery-8.jpg",
+  "/images/gallery-9.jpg",
+  "/images/artboard-4.png",      // EventDetails
+  "/images/artboard-7.png",      // RSVPForm
+  "/images/artboard-5.png",      // WeddingGift
+  "/images/artboard-6.png",      // Footer
+];
+
 const SplashModal = ({ guestName = "Guest" }: { guestName?: string }) => {
   const [showSplash, setShowSplash] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
-  const [phase, setPhase] = useState<"enter" | "idle" | "exit">("enter");
+  const [fadeIn, setFadeIn] = useState(false);
+  const [showTapHint, setShowTapHint] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  // Trigger the fly-in transition after first paint
-  const [mounted, setMounted] = useState(false);
+  // Fade in card after mount
   useEffect(() => {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => setMounted(true));
-    });
-  }, []);
-
-  // Bird enters → lands after 1.2s
-  useEffect(() => {
-    const t = setTimeout(() => setPhase("idle"), 1200);
+    const t = setTimeout(() => setFadeIn(true), 100);
     return () => clearTimeout(t);
   }, []);
 
-  // Floating animation via a second state toggle
-  const [floatUp, setFloatUp] = useState(false);
+  // Show "Tap to open" after animation settles (2.5s)
   useEffect(() => {
-    if (phase !== "idle") return;
-    const interval = setInterval(() => setFloatUp((v) => !v), 1500);
-    return () => clearInterval(interval);
-  }, [phase]);
+    const t = setTimeout(() => setShowTapHint(true), 2500);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Preload assets sequentially in section order during splash animation
+  useEffect(() => {
+    let cancelled = false;
+    const loadInOrder = async () => {
+      for (const src of PRELOAD_IMAGES) {
+        if (cancelled) break;
+        await new Promise<void>((resolve) => {
+          const img = new window.Image();
+          img.onload = () => resolve();
+          img.onerror = () => resolve(); // skip failed, continue loading
+          img.src = `${basePath}${src}`;
+        });
+      }
+    };
+    loadInOrder();
+    return () => { cancelled = true; };
+  }, [basePath]);
 
   useEffect(() => {
     document.body.style.overflow = showSplash ? "hidden" : "auto";
@@ -37,7 +69,7 @@ const SplashModal = ({ guestName = "Guest" }: { guestName?: string }) => {
   }, [showSplash]);
 
   const handleOpenInvitation = () => {
-    setPhase("exit");
+    setFadeOut(true);
     window.dispatchEvent(new CustomEvent("invitation-opened"));
     setTimeout(() => {
       setShowSplash(false);
@@ -46,30 +78,6 @@ const SplashModal = ({ guestName = "Guest" }: { guestName?: string }) => {
   };
 
   if (!isVisible) return null;
-
-  // Compute bird transform based on phase
-  let birdTransform = "translate(120%, -80%) rotate(15deg) scale(0.5)";
-  let birdOpacity = 0;
-  let birdTransition = "transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease";
-
-  if (phase === "idle") {
-    birdTransform = floatUp
-      ? "translateY(-6px) rotate(0.5deg)"
-      : "translateY(4px) rotate(-0.5deg)";
-    birdOpacity = 1;
-    birdTransition = "transform 1.5s ease-in-out, opacity 0.4s ease";
-  } else if (phase === "enter") {
-    if (mounted) {
-      // Transition TO landed position
-      birdTransform = "translate(0, 0) rotate(0deg) scale(1)";
-      birdOpacity = 1;
-    }
-    // else: stays at initial offscreen position
-  } else if (phase === "exit") {
-    birdTransform = "translate(-150%, -200%) rotate(-20deg) scale(0.3)";
-    birdOpacity = 0;
-    birdTransition = "transform 0.8s cubic-bezier(0.55, 0, 1, 0.45), opacity 0.6s ease";
-  }
 
   return (
     <div
@@ -102,6 +110,9 @@ const SplashModal = ({ guestName = "Guest" }: { guestName?: string }) => {
             overflow: "hidden",
             textAlign: "center",
             border: "1px solid #e6e0d6",
+            opacity: fadeOut ? 0 : fadeIn ? 1 : 0,
+            transform: fadeOut ? "scale(0.95)" : fadeIn ? "scale(1)" : "scale(0.95)",
+            transition: "opacity 0.8s ease, transform 0.8s ease",
           }}
         >
           {/* Guest name */}
@@ -112,9 +123,8 @@ const SplashModal = ({ guestName = "Guest" }: { guestName?: string }) => {
                 fontSize: "0.95rem",
                 marginBottom: "0.5rem",
                 fontFamily: "var(--font-sans)",
-                opacity: phase === "enter" ? 0 : 1,
-                transform: phase === "enter" ? "translateY(20px)" : "translateY(0)",
-                transition: "opacity 0.6s ease 1.3s, transform 0.6s ease 1.3s",
+                opacity: fadeIn ? 1 : 0,
+                transition: "opacity 0.8s ease 0.3s",
               }}
             >
               Dear <span style={{ fontWeight: 600 }}>{guestName}</span>,
@@ -130,9 +140,8 @@ const SplashModal = ({ guestName = "Guest" }: { guestName?: string }) => {
               border: "none",
               padding: 0,
               width: "100%",
-              transform: birdTransform,
-              opacity: birdOpacity,
-              transition: birdTransition,
+              opacity: fadeIn ? 1 : 0,
+              transition: "opacity 1s ease 0.5s",
             }}
             aria-label="Open Invitation"
           >
@@ -146,22 +155,19 @@ const SplashModal = ({ guestName = "Guest" }: { guestName?: string }) => {
             />
           </button>
 
-          {/* Tap hint */}
-          {phase === "idle" && (
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "#9f9389",
-                padding: "0.25rem 0 1rem",
-                opacity: floatUp ? 0.6 : 1,
-                transition: "opacity 1.5s ease",
-              }}
-            >
-              Tap the bird to open
-            </p>
-          )}
-
-          <div style={{ padding: "0 1.5rem", marginTop: "-5rem", paddingBottom: "2rem", position: "relative", zIndex: 10 }} />
+          {/* Tap hint — always visible so users know what to do */}
+          <p
+            style={{
+              fontSize: "0.8rem",
+              color: "#9f9389",
+              padding: "0.5rem 0 1.5rem",
+              opacity: fadeIn && !fadeOut ? 1 : 0,
+              transition: "opacity 1s ease 1.5s",
+              letterSpacing: "0.05em",
+            }}
+          >
+            👆 Tap to open the invitation
+          </p>
         </div>
       </div>
     </div>
