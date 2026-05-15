@@ -28,7 +28,7 @@ jobs:
           cp out/index.html out/404.html
           touch out/.nojekyll
         env:
-          NEXT_PUBLIC_BASE_PATH: '/pepong-wedding-invitation'
+          NEXT_PUBLIC_BASE_PATH: ''
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
