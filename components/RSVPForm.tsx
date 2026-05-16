@@ -75,7 +75,7 @@ const RSVPForm = () => {
                     Save us from guessing.
                   </p>
                   <p className="mb-6 text-sm text-foreground leading-relaxed font-sans text-center">
-                    Kindly RSVP by 30 May 2026 by completing the form below.
+                    Kindly RSVP by 6 June 2026 by completing the form below.
                   </p>
 
                   <iframe name="hidden_iframe" className="hidden" onLoad={() => { if(submitted) { } }}></iframe>
