@@ -1,9 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useGuestName } from "./GuestNameProvider";
+import { isIntimateDinnerGuest } from "@/lib/intimateDinnerGuests";
 
 const EventDetails = () => {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const guestName = useGuestName();
+  const showIntimateDinner = isIntimateDinnerGuest(guestName);
 
   return (
     <section className="w-full bg-background flex flex-col items-center mt-8">
@@ -23,7 +27,6 @@ const EventDetails = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        {/* Left column - Church Image */}
         <div className="w-full md:w-1/2 relative min-h-[400px] border-b md:border-b-0 md:border-r border-border">
           <Image
             src={`${basePath}/images/artboard-4.png`}
@@ -33,7 +36,6 @@ const EventDetails = () => {
           />
         </div>
 
-        {/* Right column - Text Details */}
         <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
           <div className="mb-8">
             <p className="text-sm font-sans leading-relaxed text-foreground">
@@ -60,7 +62,68 @@ const EventDetails = () => {
           <div className="w-full mt-4">
             <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Maps:</h3>
             <div className="w-full h-48 rounded-lg overflow-hidden border border-border mt-3 shadow-sm">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.7972675012297!2d107.61050090397809!3d-6.9148259108299435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6309a9f3bd5%3A0x59751be8b7eb9772!2sSaint%20Peter%20Cathedral%20Bandung!5e0!3m2!1sen!2sid!4v1778501836858!5m2!1sen!2sid" 
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.7972675012297!2d107.61050090397809!3d-6.9148259108299435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6309a9f3bd5%3A0x59751be8b7eb9772!2sSaint%20Peter%20Cathedral%20Bandung!5e0!3m2!1sen!2sid!4v1778501836858!5m2!1sen!2sid"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: "grayscale(100%) contrast(120%)" }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {showIntimateDinner && (
+        <motion.div
+          className="w-full md:max-w-4xl border-y md:border border-border flex flex-col md:flex-row bg-[#F2EBE1] md:rounded-xl overflow-hidden mb-8 shadow-sm"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="w-full md:w-1/2 relative min-h-[400px] border-b md:border-b-0 md:border-r border-border">
+            <Image
+              src={`${basePath}/images/artboard-5.png`}
+              alt="Intimate Dinner"
+              fill
+              className="object-cover"
+            />
+          </div>
+
+          <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+            <div className="mb-6">
+              <p className="text-xs font-sans uppercase tracking-[0.3em] text-[#9CBA7F] mb-3">
+                For selected guests
+              </p>
+              <h3 className="text-4xl md:text-5xl font-script text-foreground mb-4">Intimate Dinner</h3>
+              <p className="text-sm font-sans leading-relaxed text-foreground">
+                We would love to continue the celebration with you over a more intimate dinner afterwards.
+              </p>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Date & Time:</h3>
+              <p className="text-sm font-sans leading-relaxed text-foreground">
+                Saturday, 20 June 2026<br />
+                16:30 — 19:00 WIB
+              </p>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Location:</h3>
+              <p className="text-sm font-sans leading-relaxed text-foreground">
+                Crowne Plaza Bandung
+              </p>
+            </div>
+
+            <div className="w-full mt-4">
+              <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Maps:</h3>
+              <div className="w-full h-48 rounded-lg overflow-hidden border border-border mt-3 shadow-sm">
+                <iframe
+                  src="https://www.google.com/maps?q=Crowne+Plaza+Bandung&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0, filter: "grayscale(100%) contrast(120%)" }}
@@ -68,10 +131,11 @@ const EventDetails = () => {
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
+              </div>
             </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 };
