@@ -71,8 +71,11 @@ const RSVPForm = () => {
                 </div>
               ) : (
                 <>
+                  <p className="mb-2 text-sm text-foreground leading-relaxed font-sans text-center">
+                    Save us from guessing.
+                  </p>
                   <p className="mb-6 text-sm text-foreground leading-relaxed font-sans text-center">
-                    Please RSVP by completing the form below.
+                    Kindly RSVP by 30 May 2026 by completing the form below.
                   </p>
 
                   <iframe name="hidden_iframe" className="hidden" onLoad={() => { if(submitted) { } }}></iframe>

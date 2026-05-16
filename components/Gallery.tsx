@@ -34,10 +34,28 @@ const Gallery = () => {
             className="w-full h-auto object-contain"
           />
           
-          <div className="mt-12 text-center px-4 max-w-lg mx-auto">
-            <p className="text-sm md:text-base font-sans leading-relaxed text-foreground">
+          <div className="mt-12 px-4 max-w-3xl mx-auto">
+            <p className="text-sm md:text-base font-sans leading-relaxed text-foreground text-center">
               A few of our favorite moments together — the ones we keep coming back to.
             </p>
+
+            <div className="mt-8 space-y-5 text-sm md:text-base font-sans leading-relaxed text-foreground text-left bg-[#F7F2EA] border border-border rounded-2xl p-6 md:p-8 shadow-sm">
+              <p>
+                We started as junior high and high school friends, quietly passing through the same chapters without knowing we would one day become each other&apos;s favorite story.
+              </p>
+              <p>
+                Dika was quiet, steady, and probably enjoying life in grandpa mode. Meanwhile, Jojo was random, chaotic, and occasionally too much to handle.
+              </p>
+              <p>
+                But life has its funny routes. What started as familiar faces slowly became comfortable conversations, shared laughter, weekend rides, and a feeling of home. After a few turns and unexpected climbs, we found balance — and a pace that feels just right.
+              </p>
+              <p>
+                As for the nicknames, Adhika was usually called Dika, but somewhere along the way, he became Pong. It started with his love for skipping, his go-to sport because, as he said, it is cheap and convenient. So, Dika the Skippong became Pong.
+              </p>
+              <p>
+                And Pepe? The name somehow travelled from Josephine to José, and from José to Pepe — which, as it turns out, is actually a real Spanish nickname. And yes, the frog reference is not entirely denied.
+              </p>
+            </div>
           </div>
         </motion.div>
       </div>

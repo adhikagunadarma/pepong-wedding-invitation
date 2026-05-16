@@ -40,7 +40,7 @@ const Couple = () => {
           />
           <div className="w-[300px] mt-2">
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
-              Quiet but dependable, with a dry sense of humor and a knack for fixing things — including bad days.
+              Quiet, steady, and dependable, with a dry sense of humor and a knack for making even ordinary days feel a little lighter.
             </p>
           </div>
         </motion.div>
@@ -60,7 +60,7 @@ const Couple = () => {
           />
           <div className="w-[300px] mt-2">
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
-               Warm, thoughtful, and always the first to laugh. He finds joy in the little things and makes everyone around him feel at home.
+              Warm, thoughtful, and a little unpredictable in the best way. She finds joy in the little things and makes everyone around her feel at home.
             </p>
           </div>
         </motion.div>
