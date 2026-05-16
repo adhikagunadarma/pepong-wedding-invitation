@@ -17,8 +17,8 @@ const Hero = () => {
       </div>
 
       <div className="text-center px-8 py-12 bg-background w-full">
-        <p className="text-sm md:text-base text-foreground max-w-lg mx-auto font-sans leading-relaxed">
-          We're getting married and we'd love for you to be there to celebrate with us.
+        <p className="text-sm md:text-base text-foreground max-w-none mx-auto font-sans leading-relaxed whitespace-nowrap">
+          We&apos;re getting married and we&apos;d love for you to be there to celebrate with us.
         </p>
       </div>
     </section>

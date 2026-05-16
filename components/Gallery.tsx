@@ -19,13 +19,13 @@ const storyMoments = [
     eyebrow: "The middle",
     title: "Somewhere along the way",
     body:
-      "What started as familiar faces slowly became comfortable conversations, shared laughter, weekend rides, and a feeling of home. After a few turns and unexpected climbs, we found balance — and a pace that feels just right.",
+      "But life has its funny routes. What started as familiar faces slowly became comfortable conversations, shared laughter, weekend rides, and a feeling of home. After a few turns and unexpected climbs, we found balance — and a pace that feels just right.",
   },
   {
     eyebrow: "The nicknames",
     title: "How Pepe met Pong",
     body:
-      "Adhika was usually called Dika, but somewhere along the way he became Pong — thanks to his love for skipping, his go-to sport because it was cheap and convenient. As for Pepe, the name somehow travelled from Josephine to José, and from José to Pepe. The frog reference is, of course, not entirely denied.",
+      "Adhika was usually called Dika, but somewhere along the way, he became Pong. It started with his love for skipping, his go-to sport because, as he said, it is cheap and convenient. So, Dika the Skippong became Pong. And Pepe? The name somehow travelled from Josephine to José, and from José to Pepe — which, as it turns out, is actually a real Spanish nickname. And yes, the frog reference is not entirely denied.",
   },
 ];
 
