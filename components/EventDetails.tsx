@@ -86,8 +86,8 @@ const EventDetails = () => {
         >
           <div className="w-full md:w-1/2 relative min-h-[400px] border-b md:border-b-0 md:border-r border-border">
             <Image
-              src={`${basePath}/images/artboard-5.png`}
-              alt="Intimate Dinner"
+              src={`${basePath}/images/gallery-10.jpg`}
+              alt="Crowne Plaza intimate dinner"
               fill
               className="object-cover"
             />
