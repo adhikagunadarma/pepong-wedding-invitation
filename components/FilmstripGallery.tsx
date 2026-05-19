@@ -9,6 +9,9 @@ const filmPhotos = [
   "/images/gallery-5.jpg",
   "/images/gallery-6.jpg",
   "/images/gallery-7.jpg",
+  "/images/gallery-11.jpg",
+  "/images/gallery-12.jpg",
+  "/images/gallery-13.jpg",
 ];
 
 const FilmstripGallery = () => {

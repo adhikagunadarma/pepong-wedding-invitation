@@ -19,6 +19,9 @@ const PRELOAD_IMAGES = [
   "/images/gallery-7.jpg",
   "/images/gallery-8.jpg",
   "/images/gallery-9.jpg",
+  "/images/gallery-11.jpg",
+  "/images/gallery-12.jpg",
+  "/images/gallery-13.jpg",
   "/images/artboard-4.png",      // EventDetails
   "/images/artboard-7.png",      // RSVPForm
   "/images/artboard-5.png",      // WeddingGift
