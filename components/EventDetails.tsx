@@ -108,14 +108,15 @@ const EventDetails = () => {
               <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Date & Time:</h3>
               <p className="text-sm font-sans leading-relaxed text-foreground">
                 Saturday, 20 June 2026<br />
-                16:30 — 19:00 WIB
+                17:00 — 19:00 WIB
               </p>
             </div>
 
             <div className="mb-8">
               <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Location:</h3>
               <p className="text-sm font-sans leading-relaxed text-foreground">
-                Crowne Plaza Bandung
+                Crowne Plaza Bandung <br />
+                Jl. Lembong No.19, Braga, Kec. Sumur Bandung, Kota Bandung, Jawa Barat 40111
               </p>
             </div>
 
@@ -123,7 +124,7 @@ const EventDetails = () => {
               <h3 className="font-bold font-sans text-sm mb-2 uppercase tracking-wide">Maps:</h3>
               <div className="w-full h-48 rounded-lg overflow-hidden border border-border mt-3 shadow-sm">
                 <iframe
-                  src="https://www.google.com/maps?q=Crowne+Plaza+Bandung&output=embed"
+                  src="https://www.google.com/maps?q=Crowne+Plaza+Bandung+Jl.+Lembong+No.19+Bandung&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0, filter: "grayscale(100%) contrast(120%)" }}

@@ -1,6 +1,18 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Instagram } from "lucide-react";
+
+const instagramProfiles = {
+  bride: {
+    label: "@fransisca.josephine",
+    url: "https://www.instagram.com/fransisca.josephine/",
+  },
+  groom: {
+    label: "@adhikagunadarma",
+    url: "https://www.instagram.com/adhikagunadarma/",
+  },
+};
 
 const Couple = () => {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -42,6 +54,16 @@ const Couple = () => {
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
               Quiet, steady, and dependable, with a dry sense of humor and a knack for making even ordinary days feel a little lighter.
             </p>
+            <a
+              href={instagramProfiles.bride.url}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 flex items-center justify-center gap-1.5 text-xs font-sans tracking-wide text-foreground/80 hover:text-[#9CBA7F] transition-colors"
+              aria-label="Open Josephine's Instagram profile"
+            >
+              <Instagram className="h-3.5 w-3.5" />
+              {instagramProfiles.bride.label}
+            </a>
           </div>
         </motion.div>
 
@@ -62,6 +84,16 @@ const Couple = () => {
             <p className="text-xs text-center font-sans tracking-tight leading-relaxed px-4">
               Warm, thoughtful, and a little unpredictable in the best way. She finds joy in the little things and makes everyone around her feel at home.
             </p>
+            <a
+              href={instagramProfiles.groom.url}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 flex items-center justify-center gap-1.5 text-xs font-sans tracking-wide text-foreground/80 hover:text-[#9CBA7F] transition-colors"
+              aria-label="Open Adhika's Instagram profile"
+            >
+              <Instagram className="h-3.5 w-3.5" />
+              {instagramProfiles.groom.label}
+            </a>
           </div>
         </motion.div>
 

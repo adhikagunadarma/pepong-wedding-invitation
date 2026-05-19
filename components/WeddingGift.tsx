@@ -5,9 +5,8 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 
-// todo : add the correct one 
 const bankInfos = [
-  { name: "Josephine Fransisca", account: "0183863891", bank: "BCA" },
+  { name: "Josephine Fransisca", account: "TBA", bank: "Mandiri", isPending: true },
   { name: "Adhika Gunadarma", account: "6044437273", bank: "BCA" }
 ]
 
@@ -87,15 +86,18 @@ export default function WeddingGift() {
                         <p className="font-bold text-lg uppercase tracking-wide text-foreground">{bankInfo.name}</p>
                         <p className="text-xs uppercase tracking-widest mt-1 text-foreground/70">{bankInfo.bank}</p>
                       </div>
-                      <button 
-                        onClick={() => handleCopy(bankInfo.account)}
-                        className="p-2 border border-border rounded-full hover:bg-muted transition-colors"
-                        aria-label="Copy account number"
+                      <button
+                        onClick={() => !bankInfo.isPending && handleCopy(bankInfo.account)}
+                        disabled={bankInfo.isPending}
+                        className="p-2 border border-border rounded-full hover:bg-muted transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+                        aria-label={bankInfo.isPending ? "Account number will be updated later" : "Copy account number"}
                       >
                         <Copy className="w-4 h-4 text-foreground" />
                       </button>
                     </div>
-                    <p className="mt-2 font-mono text-sm tracking-widest text-[#9CBA7F]">{bankInfo.account}</p>
+                    <p className="mt-2 font-mono text-sm tracking-widest text-[#9CBA7F]">
+                      {bankInfo.isPending ? "Account number will be updated soon" : bankInfo.account}
+                    </p>
                     
                     {copied === bankInfo.account && (
                       <div className="absolute inset-0 bg-background/90 flex items-center justify-center font-bold text-[#9CBA7F] animate-fadeIn z-10">
