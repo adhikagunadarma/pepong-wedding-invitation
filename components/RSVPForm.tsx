@@ -119,12 +119,13 @@ const RSVPForm = () => {
                     </div>
 
                     {/* Number of Guests */}
-                    {isAttending === false ? (
+                    {isAttending === false && (
                       <>
                         <input type="hidden" name="entry.1443474651" value="__other_option__" />
                         <input type="hidden" name="entry.1443474651.other_option_response" value="0" />
                       </>
-                    ) : (
+                    )}
+                    {isAttending === true && (
                       <div className="flex flex-col gap-1">
                         <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">How many people will attend?</label>
                         <div className="flex flex-col gap-2">
