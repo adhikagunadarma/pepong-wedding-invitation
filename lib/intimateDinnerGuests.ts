@@ -1,35 +1,15 @@
-// Derived from the “Master Guest List” sheet for groups:
-// - Famili Oma
-// - Fams Keluarga Josephine
-// - Fams Pong
+// Derived from the “Master Guest List” sheet where selected/intimate-dinner guests
+// are currently marked with Priority = 1.
 // Note: because the invitation route only uses ?to=<guest name>, duplicate names in different groups
-// cannot be distinguished at runtime. At the moment the only duplicate in the sheet is “Nina”.
+// cannot be distinguished at runtime.
 const INTIMATE_DINNER_GUESTS = [
-  "Keluarga Ipoh Kim",
-  "Ipoh Lien",
-  "Om Nggie",
-  "Kukong Swie",
-  "Kukong Bing",
-  "Kukong Ping",
-  "Kukong Ling",
-  "Lina",
-  "Joy",
-  "Oma",
-  "Ku Yudi",
-  "Kim Yane",
-  "Juan",
-  "Jordi",
-  "Nina",
-  "Sheryl",
-  "Bibo",
-  "Tante Dian",
-  "Hazel",
-  "Ieie",
-  "Om Didin",
-  "Aless",
-  "Andoni",
-  "Gaia",
-  "Deril",
+  "Stephen",
+  "Deo and Partner",
+  "Benedict and Yoshi",
+  "Rita and Devin",
+  "Mrs. Herlina Subroto",
+  "Jocelyne",
+  "Oma Yanti",
   "Ian Tanto and Patricia Sulianti",
   "Nirmala and Oki",
   "Mayura and Partner",
@@ -41,6 +21,10 @@ const INTIMATE_DINNER_GUESTS = [
   "Om Yos and Partner",
   "Tante Ay and Family",
   "Om Adhi and Family",
+  "Mario and Novi",
+  "Upay and Partner",
+  "Mr. Andreas K & Family",
+  "Koor and Petugas Gereja",
 ] as const;
 
 function normalizeGuestName(value: string) {
