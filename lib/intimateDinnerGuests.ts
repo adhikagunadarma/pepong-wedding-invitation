@@ -1,35 +1,25 @@
-// Derived from the “Master Guest List” sheet for groups:
-// - Famili Oma
+// Derived from the “Master Guest List” sheet for these groups only:
+// - Famili Oma -> disebut apa?
 // - Fams Keluarga Josephine
 // - Fams Pong
 // Note: because the invitation route only uses ?to=<guest name>, duplicate names in different groups
-// cannot be distinguished at runtime. At the moment the only duplicate in the sheet is “Nina”.
+// cannot be distinguished at runtime.
 const INTIMATE_DINNER_GUESTS = [
-  "Keluarga Ipoh Kim",
-  "Ipoh Lien",
-  "Om Nggie",
-  "Kukong Swie",
-  "Kukong Bing",
-  "Kukong Ping",
-  "Kukong Ling",
-  "Lina",
-  "Joy",
-  "Oma",
-  "Ku Yudi",
-  "Kim Yane",
-  "Juan",
-  "Jordi",
-  "Nina",
-  "Sheryl",
-  "Bibo",
-  "Tante Dian",
-  "Hazel",
-  "Ieie",
-  "Om Didin",
-  "Aless",
-  "Andoni",
-  "Gaia",
-  "Deril",
+  "Mr. Winarto and Family",
+  "Ms. Linda Santoso",
+  "Om Gie & Om Soen",
+  "Mr. Gunawan Santoso and Mrs. Viona",
+  "Mr. Yohanes Anggawijaya and Mrs. Tien",
+  "Mr. and Mrs. Christianus Anggawijaya",
+  "Mr. Yoannes Worang",
+  "Mrs. Herlina Subroto",
+  "Jocelyne",
+  "Oma Yanti",
+  "Mr. Wahyudi Subroto and family",
+  "Juan and Sheryl",
+  "Mr. Mulyadi Subroto and family",
+  "Mr. Nasaruddin Toha and family",
+  "Darryl",
   "Ian Tanto and Patricia Sulianti",
   "Nirmala and Oki",
   "Mayura and Partner",

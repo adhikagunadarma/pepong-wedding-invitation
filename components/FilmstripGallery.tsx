@@ -1,8 +1,18 @@
 "use client";
 import React, { useRef, useEffect, useCallback, useState } from "react";
 
-const GALLERY_COUNT = 9;
-const filmPhotos = Array.from({ length: GALLERY_COUNT }, (_, i) => `/images/gallery-${i + 1}.jpg`);
+const filmPhotos = [
+  "/images/gallery-1.jpg",
+  "/images/gallery-2.jpg",
+  "/images/gallery-3.jpg",
+  "/images/gallery-4.jpg",
+  "/images/gallery-5.jpg",
+  "/images/gallery-6.jpg",
+  "/images/gallery-7.jpg",
+  "/images/gallery-11.jpg",
+  "/images/gallery-12.jpg",
+  "/images/gallery-13.jpg",
+];
 
 const FilmstripGallery = () => {
   const stripRef = useRef<HTMLDivElement>(null);
