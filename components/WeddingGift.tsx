@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 
 const bankInfos = [
-  { name: "Josephine Fransisca", account: "TBA", bank: "Mandiri" },
+  { name: "Josephine Fransisca", account: "1260007307365", bank: "Mandiri" },
   { name: "Adhika Gunadarma", account: "6044437273", bank: "BCA" }
 ]
 
