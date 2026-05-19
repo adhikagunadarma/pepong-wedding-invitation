@@ -1,12 +1,10 @@
 # Outdoor filmroll assets
 
-Place the new outdoor filmroll images in this folder after they are provided.
+Place the new outdoor filmroll images here after they are provided.
 
-Before wiring them into `components/FilmstripGallery.tsx`, compress/export them for web use:
+Before wiring new images into `components/FilmstripGallery.tsx`:
 
-- Prefer `.jpg` or `.webp`.
-- Target width: around 1200px for landscape images.
+- Compress only the new images; existing gallery images do not need to be recompressed.
+- Save them as `.jpg` files.
+- Continue the existing naming pattern: `gallery-x.jpg`.
 - Keep each file ideally below 300KB.
-- Use lowercase kebab-case names, e.g. `outdoor-1.jpg`.
-
-Current temporary cleanup removed the red studio-theme frames (`gallery-8.jpg` and `gallery-9.jpg`) from the filmroll list.
