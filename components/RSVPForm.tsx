@@ -10,6 +10,7 @@ const RSVPForm = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [guestCountOther, setGuestCountOther] = useState(false);
+  const [isAttending, setIsAttending] = useState<boolean | null>(null);
   const guestName = useGuestName();
   const defaultName = guestName !== "Guest" ? guestName : "";
 
@@ -107,44 +108,51 @@ const RSVPForm = () => {
                       <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">Will you attend?</label>
                       <div className="flex flex-col gap-2">
                         <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.1218266958" value="Yes, I will attend" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <input type="radio" name="entry.1218266958" value="Yes, I will attend" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setIsAttending(true)} />
                           <span className="text-sm">Yes, gladly!</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.1218266958" value="No, I cannot attend" required className="accent-[#9CBA7F] w-4 h-4" />
+                          <input type="radio" name="entry.1218266958" value="No, I cannot attend" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setIsAttending(false)} />
                           <span className="text-sm">No, I'm sorry</span>
                         </label>
                       </div>
                     </div>
 
                     {/* Number of Guests */}
-                    <div className="flex flex-col gap-1">
-                      <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">How many people will attend?</label>
-                      <div className="flex flex-col gap-2">
-                        <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.1443474651" value="1" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setGuestCountOther(false)} />
-                          <span className="text-sm">1</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.1443474651" value="2" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setGuestCountOther(false)} />
-                          <span className="text-sm">2</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.1443474651" value="__other_option__" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setGuestCountOther(true)} />
-                          <span className="text-sm">Other</span>
-                        </label>
-                        {guestCountOther && (
-                          <input
-                            type="number"
-                            name="entry.1443474651.other_option_response"
-                            min="1"
-                            required
-                            placeholder="Enter number of guests"
-                            className="w-full border border-border bg-white rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#9CBA7F]"
-                          />
-                        )}
+                    {isAttending === false ? (
+                      <>
+                        <input type="hidden" name="entry.1443474651" value="__other_option__" />
+                        <input type="hidden" name="entry.1443474651.other_option_response" value="0" />
+                      </>
+                    ) : (
+                      <div className="flex flex-col gap-1">
+                        <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">How many people will attend?</label>
+                        <div className="flex flex-col gap-2">
+                          <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
+                            <input type="radio" name="entry.1443474651" value="1" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setGuestCountOther(false)} />
+                            <span className="text-sm">1</span>
+                          </label>
+                          <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
+                            <input type="radio" name="entry.1443474651" value="2" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setGuestCountOther(false)} />
+                            <span className="text-sm">2</span>
+                          </label>
+                          <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
+                            <input type="radio" name="entry.1443474651" value="__other_option__" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setGuestCountOther(true)} />
+                            <span className="text-sm">Other</span>
+                          </label>
+                          {guestCountOther && (
+                            <input
+                              type="number"
+                              name="entry.1443474651.other_option_response"
+                              min="1"
+                              required
+                              placeholder="Enter number of guests"
+                              className="w-full border border-border bg-white rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#9CBA7F]"
+                            />
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     <button
                       type="submit"
