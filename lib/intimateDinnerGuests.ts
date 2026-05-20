@@ -31,6 +31,8 @@ const INTIMATE_DINNER_GUESTS = [
   "Om Yos and Partner",
   "Tante Ay and Family",
   "Om Adhi and Family",
+  "Basuki and Family",
+  "Hadi and Family",
 ] as const;
 
 function normalizeGuestName(value: string) {
