@@ -7,6 +7,10 @@
 const INTIMATE_DINNER_GUESTS = [
   "Mr. Winarto and Family",
   "Ms. Linda Santoso",
+  "Lia and Family",
+  "Irene and Family",
+  "Ricardo and Family",
+  "Yanny and Family",
   "Om Gie & Om Soen",
   "Mr. Gunawan Santoso and Mrs. Viona",
   "Mr. Yohanes Anggawijaya and Mrs. Tien",
