@@ -5,14 +5,27 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useGuestName } from "./GuestNameProvider";
 
+const ATTENDING_YES = "Yes, I will attend";
+const ATTENDING_NO = "No, I cannot attend";
+const GUEST_COUNT_OTHER = "__other_option__";
+
 const RSVPForm = () => {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [attendingStatus, setAttendingStatus] = useState("");
+  const [guestCount, setGuestCount] = useState("");
   const [guestCountOther, setGuestCountOther] = useState(false);
-  const [isAttending, setIsAttending] = useState<boolean | null>(null);
   const guestName = useGuestName();
   const defaultName = guestName !== "Guest" ? guestName : "";
+  const isAttending = attendingStatus === ATTENDING_YES;
+  const isNotAttending = attendingStatus === ATTENDING_NO;
+
+  const resetGuestCount = () => {
+    setGuestCount("");
+    setGuestCountOther(false);
+  };
 
   return (
     <section className="w-full py-16 flex flex-col items-center bg-[#F2EBE1]">
@@ -50,24 +63,26 @@ const RSVPForm = () => {
             exit={{ opacity: 0 }}
           >
             <motion.div
-               className="w-full max-w-sm rounded-[1rem] border border-border p-8 bg-[#F2EBE1] shadow-xl relative"
-               initial={{ scale: 0.9, y: 20 }}
-               animate={{ scale: 1, y: 0 }}
-               exit={{ scale: 0.9, y: 20 }}
+              className="w-full max-w-sm rounded-[1rem] border border-border p-8 bg-[#F2EBE1] shadow-xl relative"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
             >
-              <button 
+              <button
                 onClick={() => setModalOpen(false)}
                 className="absolute top-4 right-4 text-3xl opacity-50 hover:opacity-100"
               >
                 &times;
               </button>
-              
+
               <h3 className="font-script text-6xl text-center mb-6 text-foreground">RSVP</h3>
 
               {submitted ? (
                 <div className="py-8 animate-fadeIn flex flex-col items-center">
                   <h3 className="font-script text-5xl text-[#9CBA7F] mb-4">Thank you!</h3>
-                  <p className="text-foreground font-sans text-sm tracking-wide">Your response has been received.</p>
+                  <p className="text-foreground font-sans text-sm tracking-wide text-center">
+                    Your response has been received.
+                  </p>
                   <button onClick={() => setModalOpen(false)} className="mt-8 underline text-sm tracking-widest font-bold">CLOSE</button>
                 </div>
               ) : (
@@ -79,66 +94,123 @@ const RSVPForm = () => {
                     Kindly RSVP by 6 June 2026 by completing the form below.
                   </p>
 
-                  <iframe name="hidden_iframe" className="hidden" onLoad={() => { if(submitted) { } }}></iframe>
-                  {/* TODO: Update form link and adjust form_data.js */}
+                  <iframe
+                    name="hidden_iframe"
+                    className="hidden"
+                    onLoad={() => {
+                      if (!isSubmitting) return;
+                      setIsSubmitting(false);
+                      setSubmitted(true);
+                    }}
+                  ></iframe>
                   <form
                     action="https://docs.google.com/forms/d/e/1FAIpQLSdGMHhAzj3bm-UJaeIt88xo-BRRWRIYM0kjrK3a3-q5Pn8gqg/formResponse"
                     method="POST"
                     target="hidden_iframe"
                     className="flex flex-col gap-4 text-left font-sans"
                     onSubmit={() => {
-                        setTimeout(() => setSubmitted(true), 1000);
+                      setIsSubmitting(true);
                     }}
                   >
-                    {/* Name Block */}
                     <div className="flex flex-col gap-1">
                       <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">Name</label>
-                      <input 
-                        type="text" 
-                        name="entry.971315001" 
-                        required 
+                      <input
+                        type="text"
+                        name="entry.971315001"
+                        required
                         defaultValue={defaultName}
                         placeholder="Your Name"
                         className="w-full border border-border bg-white rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#9CBA7F]"
                       />
                     </div>
 
-                    {/* Attending Status */}
                     <div className="flex flex-col gap-1">
                       <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">Will you attend?</label>
                       <div className="flex flex-col gap-2">
                         <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.1218266958" value="Yes, I will attend" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setIsAttending(true)} />
+                          <input
+                            type="radio"
+                            name="entry.1218266958"
+                            value={ATTENDING_YES}
+                            required
+                            checked={isAttending}
+                            onChange={() => setAttendingStatus(ATTENDING_YES)}
+                            className="accent-[#9CBA7F] w-4 h-4"
+                          />
                           <span className="text-sm">Yes, gladly!</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                          <input type="radio" name="entry.1218266958" value="No, I cannot attend" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setIsAttending(false)} />
+                          <input
+                            type="radio"
+                            name="entry.1218266958"
+                            value={ATTENDING_NO}
+                            required
+                            checked={isNotAttending}
+                            onChange={() => {
+                              setAttendingStatus(ATTENDING_NO);
+                              resetGuestCount();
+                            }}
+                            className="accent-[#9CBA7F] w-4 h-4"
+                          />
                           <span className="text-sm">No, I'm sorry</span>
                         </label>
                       </div>
                     </div>
 
-                    {/* Number of Guests */}
-                    {isAttending === false && (
+                    {isNotAttending && (
                       <>
-                        <input type="hidden" name="entry.1443474651" value="__other_option__" />
+                        <input type="hidden" name="entry.1443474651" value={GUEST_COUNT_OTHER} />
                         <input type="hidden" name="entry.1443474651.other_option_response" value="0" />
                       </>
                     )}
-                    {isAttending === true && (
+
+                    {isAttending && (
                       <div className="flex flex-col gap-1">
                         <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">How many people will attend?</label>
                         <div className="flex flex-col gap-2">
                           <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                            <input type="radio" name="entry.1443474651" value="1" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setGuestCountOther(false)} />
+                            <input
+                              type="radio"
+                              name="entry.1443474651"
+                              value="1"
+                              required
+                              checked={guestCount === "1"}
+                              onChange={() => {
+                                setGuestCount("1");
+                                setGuestCountOther(false);
+                              }}
+                              className="accent-[#9CBA7F] w-4 h-4"
+                            />
                             <span className="text-sm">1</span>
                           </label>
                           <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                            <input type="radio" name="entry.1443474651" value="2" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setGuestCountOther(false)} />
+                            <input
+                              type="radio"
+                              name="entry.1443474651"
+                              value="2"
+                              required
+                              checked={guestCount === "2"}
+                              onChange={() => {
+                                setGuestCount("2");
+                                setGuestCountOther(false);
+                              }}
+                              className="accent-[#9CBA7F] w-4 h-4"
+                            />
                             <span className="text-sm">2</span>
                           </label>
                           <label className="flex items-center gap-2 cursor-pointer border border-border bg-white rounded-md px-4 py-3">
-                            <input type="radio" name="entry.1443474651" value="__other_option__" required className="accent-[#9CBA7F] w-4 h-4" onChange={() => setGuestCountOther(true)} />
+                            <input
+                              type="radio"
+                              name="entry.1443474651"
+                              value={GUEST_COUNT_OTHER}
+                              required
+                              checked={guestCount === GUEST_COUNT_OTHER}
+                              onChange={() => {
+                                setGuestCount(GUEST_COUNT_OTHER);
+                                setGuestCountOther(true);
+                              }}
+                              className="accent-[#9CBA7F] w-4 h-4"
+                            />
                             <span className="text-sm">Other</span>
                           </label>
                           {guestCountOther && (
@@ -146,7 +218,7 @@ const RSVPForm = () => {
                               type="number"
                               name="entry.1443474651.other_option_response"
                               min="1"
-                              required
+                              required={guestCount === GUEST_COUNT_OTHER}
                               placeholder="Enter number of guests"
                               className="w-full border border-border bg-white rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#9CBA7F]"
                             />
@@ -157,9 +229,10 @@ const RSVPForm = () => {
 
                     <button
                       type="submit"
-                      className="mt-6 w-full border border-border bg-[#9CBA7F] text-white uppercase tracking-widest font-bold py-4 rounded-md shadow-sm hover:bg-[#8CA872] transition-colors"
+                      disabled={isSubmitting}
+                      className="mt-6 w-full border border-border bg-[#9CBA7F] text-white uppercase tracking-widest font-bold py-4 rounded-md shadow-sm hover:bg-[#8CA872] transition-colors disabled:cursor-not-allowed disabled:opacity-70"
                     >
-                      Submit RSVP
+                      {isSubmitting ? "Submitting..." : "Submit RSVP"}
                     </button>
                   </form>
                 </>
