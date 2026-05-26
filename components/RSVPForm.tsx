@@ -19,6 +19,7 @@ const RSVPForm = () => {
   const [guestCountOther, setGuestCountOther] = useState(false);
   const guestName = useGuestName();
   const defaultName = guestName !== "Guest" ? guestName : "";
+  const isAttending = attendingStatus === ATTENDING_YES;
   const isNotAttending = attendingStatus === ATTENDING_NO;
 
   const resetGuestCount = () => {
@@ -132,7 +133,7 @@ const RSVPForm = () => {
                             name="entry.1218266958"
                             value={ATTENDING_YES}
                             required
-                            checked={attendingStatus === ATTENDING_YES}
+                            checked={isAttending}
                             onChange={() => setAttendingStatus(ATTENDING_YES)}
                             className="accent-[#9CBA7F] w-4 h-4"
                           />
@@ -144,7 +145,7 @@ const RSVPForm = () => {
                             name="entry.1218266958"
                             value={ATTENDING_NO}
                             required
-                            checked={attendingStatus === ATTENDING_NO}
+                            checked={isNotAttending}
                             onChange={() => {
                               setAttendingStatus(ATTENDING_NO);
                               resetGuestCount();
@@ -156,12 +157,14 @@ const RSVPForm = () => {
                       </div>
                     </div>
 
-                    {isNotAttending ? (
+                    {isNotAttending && (
                       <>
                         <input type="hidden" name="entry.1443474651" value={GUEST_COUNT_OTHER} />
                         <input type="hidden" name="entry.1443474651.other_option_response" value="0" />
                       </>
-                    ) : (
+                    )}
+
+                    {isAttending && (
                       <div className="flex flex-col gap-1">
                         <label className="text-xs uppercase tracking-widest text-foreground font-bold ml-1">How many people will attend?</label>
                         <div className="flex flex-col gap-2">
