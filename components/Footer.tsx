@@ -8,8 +8,8 @@ const Footer = () => {
     <footer className="w-full bg-background flex flex-col justify-between items-center text-center overflow-hidden mb-8 md:mb-16">
       
       {/* Paragraph between WeddingGift and Footer */}
-      <div className="w-full max-w-none px-4 py-8 md:py-16 mx-auto text-center">
-         <p className="text-sm md:text-base font-sans leading-relaxed text-foreground whitespace-nowrap">
+      <div className="w-full max-w-2xl px-4 py-8 md:py-16 mx-auto text-center">
+         <p className="text-sm md:text-base font-sans leading-relaxed text-foreground">
            Thank you for being part of our journey. We can&apos;t wait to celebrate this special day with you!
          </p>
       </div>
