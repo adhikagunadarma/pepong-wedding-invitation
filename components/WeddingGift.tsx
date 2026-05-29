@@ -7,6 +7,7 @@ import Image from "next/image"
 
 const bankInfos = [
   { name: "Josephine Fransisca", account: "1260007307365", bank: "Mandiri" },
+  { name: "Josephine Fransisca", account: "0183863891", bank: "BCA" },
   { name: "Adhika Gunadarma", account: "6044437273", bank: "BCA" }
 ]
 
