@@ -1,4 +1,4 @@
-// Derived from the “Master Guest List” sheet for these groups only:
+// Derived from the “Master Guest List” sheet for the intimate-dinner-enabled family groups:
 // - Famili Oma -> disebut apa?
 // - Fams Keluarga Josephine
 // - Fams Pong
@@ -6,12 +6,12 @@
 // cannot be distinguished at runtime.
 const INTIMATE_DINNER_GUESTS = [
   "Mr. Winarto and Family",
-  "Ms. Linda Santoso",
+  "Mrs. Linda Santoso",
   "Lia and Family",
   "Irene and Family",
   "Ricardo and Family",
   "Yanny and Family",
-  "Om Gie & Om Soen",
+  "Om Gie and Om Soen",
   "Mr. Gunawan Santoso and Mrs. Viona",
   "Mr. Yohanes Anggawijaya and Mrs. Tien",
   "Mr. and Mrs. Christianus Anggawijaya",
